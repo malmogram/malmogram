@@ -1,0 +1,29 @@
+ID;Tema;Motiv;Kommentar;Källor;Graftyp
+1;Befolkning;Befolkning (y) mot tid (x);;SCBs befolkningsdata;Tidsdiagram
+2;Befolkning;Befolkningsförändring mot tid;;SCBs befolkningsdata;Tidsdiagram
+3;Befolkning;Befolkning som andel av landets befolkning;;SCBs befolkningsdata;Tidsdiagram
+4;Befolkning;Befolkning som andel av Stormalmös befolkning;;SCBs befolkningsdata;Tidsdiagram
+5;Befolkning;Malmö mot Sverige - path över tid;;SCBs befolkningsdata;Linjediagram - två variabler
+6;Befolkning;Befolkning mot tid - Malmö och krans;;SCBs befolkningsdata;Tidsdiagram
+7;Befolkning;Befolkning mot tid - historia och prognos;;SCBs befolkningsdata och Malmö stadskontor;Tidsdiagram
+8;Idrott;MFF-herr - vinstandel över tid;;SvFF (indirekt);Tidsdiagram
+9;Idrott;MFF-herr - Alla matcher i en graf;;SvFF (indirekt);Punktdiagram med färgindikator
+10;Idrott;MFF-herr - Alla matcher 2008-2020;;SvFF (indirekt);Punktdiagram med teckenindikator
+11;Idrott;MFF-herr - kumulativt resultat;;SvFF (indirekt);Linjediagram
+12;Idrott;MFF-herr - Gjorda och insläppa per säsong;;SvFF (indirekt);Tidsdiagram
+13;Idrott;MFF-herr - Gjorda mot insläppta;;SvFF (indirekt);Spridningsdiagram
+14;Idrott;MFF-herr - Mesta motståndare med kumulativt resultat;;SvFF (indirekt);Stapeldiagram
+15;Geografi;Delområden;;Malmö stad (delområden). OSM (stadsdelar). SCB (DeSO);Karta
+16;Geografi;Stadsdelar;;Malmö stad (delområden). OSM (stadsdelar). SCB (DeSO);Karta
+17;Geografi;Storleksjämförelse;Planering;Malmö stad (delområden). OSM (stadsdelar). SCB (DeSO);Karta
+18;Geografi;Separerade stadsdelar;;Malmö stad (delområden). OSM (stadsdelar). SCB (DeSO);Karta
+19;Geografi;DeSO;;Malmö stad (delområden). OSM (stadsdelar). SCB (DeSO);Karta
+20;Geografi;Stadsdelar efter storlek;;Malmö stad (delområden). OSM (stadsdelar). SCB (DeSO);Stapeldiagram
+21;Geografi;Stadsdels storlek mot länders storlek;Planering;Malmö stad (delområden). OSM (stadsdelar). SCB (DeSO);Karta
+22;Klimat;Lufttemperatur (medel) mot år per station;;SMHI-väderstationsdata;Tidsdiagram
+23;Klimat;Lufttemperatur (max och min) mot år per station;;SMHI-väderstationsdata;Tidsdiagram
+24;Klimat;Lufttemperatur över året per 60- och 10-tal;;SMHI-väderstationsdata;Tidsdiagram
+25;Klimat;Lufttemperatur över året, differens 60-tal mot 10-tal;;SMHI-väderstationsdata;Tidsdiagram
+26;Klimat;Lufttemperatur per årsdag och timme, 2010-tal;;SMHI-väderstationsdata;2d-täthet, pixeldiagram (?)
+27;Klimat;Lufttemperatur mot timme per månad, 2000-tal;;SMHI-väderstationsdata;Tidsdiagram
+28;Klimat;Lufttemperatur mot årsdag, 1950-idag;;SMHI-väderstationsdata;Stapeldiagram
