@@ -9,6 +9,7 @@
 library(tidyverse)
 library(patchwork)
 library(cowplot)
+library(ggridges)
 
 # Import
 source("R/Klimat/Weather-station-setup.R", encoding = "UTF-8")
@@ -201,3 +202,25 @@ mg28 <- dat_temp %>%
         strip.text.x = element_blank(),
         strip.background.y = element_blank())
 mg28
+
+# Temperature by month, ridge plots, mg38 ----
+dat_weatherstation %>% 
+  filter(year(Datum) > 2000, year(Datum) < 2021, hour(`Tid (UTC)`) == 12) %>%
+  mutate(Månad = month(Datum, label = T, abbr = T)) %>% 
+  group_by(Månad) %>% 
+  mutate(Medeltemperutur = mean(Lufttemperatur),
+         Månad = ordered(Månad, rev(levels(Månad)))) %>% 
+  mutate(Månad = forcats::fct_relabel(Månad, tools::toTitleCase)) %>% 
+  ggplot(aes(Lufttemperatur, Månad, fill = Medeltemperutur)) +
+  geom_hline(yintercept = c("Mar", "Jun", "Sep"), col = "grey80") +
+  geom_density_ridges(color = NA, alpha = 0.90) +
+  scale_fill_gradient2(low = "#0000bb", mid = "#dddddd", high = "#bb0000", midpoint = 10) +
+  facet_wrap(~ year(Datum)) +
+  theme_mg4() +
+  theme(legend.text = element_text(size = 13),
+        panel.grid.major.x = element_line(color = "grey80"),
+        plot.background = element_rect(fill = "#ffffff", color = "#ffffff"), 
+        strip.background.x = element_blank(),
+#        strip.text.x = element_blank(),
+        strip.background.y = element_blank())
+  

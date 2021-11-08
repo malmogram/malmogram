@@ -157,4 +157,35 @@ dat %>%
   theme(axis.text = element_blank(), axis.ticks = element_blank(), 
         axis.title = element_blank(), panel.grid = element_blank())
 
-# This would make an interesting animation
+# This could make an interesting animation
+
+# Population pyramid in 1970 - 2020, mg39 ----
+dat_temp <- dat %>% 
+  filter(År %in% seq(1970, 2020, 10)) %>% 
+  group_by(Ålder, Kön, År) %>% 
+  summarise(Antal = sum(Antal)) %>% 
+  mutate(Antal_temp = ifelse(Kön == "Kvinnor", -Antal, Antal))
+
+ggplot(dat_temp, aes(Ålder, Antal_temp, fill = Kön)) + 
+  geom_bar(stat = "identity", width = 1) +
+  geom_line() +
+  coord_flip() +
+  facet_wrap(~ År)
+
+# Population pyramid, animation, mg40----
+dat_temp <- dat %>% 
+  group_by(Ålder, Kön, År) %>% 
+  summarise(Antal = sum(Antal)) %>% 
+  mutate(Antal_temp = ifelse(Kön == "Kvinnor", -Antal, Antal))
+
+g1 <- ggplot(dat_temp, aes(Ålder, Antal_temp, fill = Kön)) + 
+  geom_bar(stat = "identity", width = 1) +
+  # geom_line() +
+  geom_text(aes(y = 0, x = 110, label = floor(År)), 
+            data = dat_temp %>% filter(Kön == "Kvinnor", Ålder == 1)) +
+  coord_flip() +
+  transition_states(År, transition_length = ifelse(dat_temp$År %in% seq(1970, 2020, 10), 10, 1),
+                     state_length = ifelse(dat_temp$År %in% seq(1970, 2020, 10), 10, 1)) +
+  ease_aes()
+
+animate(g1, nframes = 300)

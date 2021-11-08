@@ -24,6 +24,18 @@ ID;Tema;Motiv;Kommentar;Källor;Graftyp
 23;Klimat;Lufttemperatur (max och min) mot år per station;;SMHI-väderstationsdata;Tidsdiagram
 24;Klimat;Lufttemperatur över året per 60- och 10-tal;;SMHI-väderstationsdata;Tidsdiagram
 25;Klimat;Lufttemperatur över året, differens 60-tal mot 10-tal;;SMHI-väderstationsdata;Tidsdiagram
-26;Klimat;Lufttemperatur per årsdag och timme, 2010-tal;;SMHI-väderstationsdata;2d-täthet, pixeldiagram (?)
+26;Klimat;Lufttemperatur per årsdag och timme, 2010-tal;;SMHI-väderstationsdata;2d-täthet, mosaikdiagram (?)
 27;Klimat;Lufttemperatur mot timme per månad, 2000-tal;;SMHI-väderstationsdata;Tidsdiagram
 28;Klimat;Lufttemperatur mot årsdag, 1950-idag;;SMHI-väderstationsdata;Stapeldiagram
+29;Befolkning;Befolkningspyramid 2020;;SCBs befolkningsdata;Befolkningspyramid (stapeldiagram)
+30;Befolkning;Befolkning mot ålder efter kön;;SCBs befolkningsdata;Stapeldiagram
+31;Befolkning;Könskvot mot ålder;;SCBs befolkningsdata;Tidsdiagram
+32;Befolkning;Ålderfördelning mot år, fyllda staplar;;SCBs befolkningsdata;Stapeldiagram
+33;Befolkning;Befolkning per åldergrupp mot år;;SCBs befolkningsdata;Linjediagram
+34;Befolkning;Andel av befolkningen per åldersgrupp mot år;;SCBs befolkningsdata;Tidsdiagram
+35;Befolkning;Antal per kön - path över tid;;SCBs befolkningsdata;Linjediagram - två variabler
+36;Befolkning;Civilstånd, uppdelade staplar per år;;SCBs befolkningsdata;Stapeldiagram
+37;Befolkning;Civilstånd vid 30;;SCBs befolkningsdata;Cirkeldiagram
+38;Klimat;Ridgeplot med fördelning av temperatur per månad;;SMHI-väderstationsdata;Ridgegraf
+39;Befolkning;Befolkningspyramid 1970 - 2020 (var tionde år);;SCBs befolkningsdata;Befolkningspyramid (stapeldiagram)
+40;Befolkning;Befolkningspyramid 1978 - 2020 (animerad);;SCBs befolkningsdata;Befolkningspyramid (stapeldiagram)
