@@ -39,3 +39,16 @@ ID;Tema;Motiv;Kommentar;Källor;Graftyp
 38;Klimat;Ridgeplot med fördelning av temperatur per månad;;SMHI-väderstationsdata;Ridgegraf
 39;Befolkning;Befolkningspyramid 1970 - 2020 (var tionde år);;SCBs befolkningsdata;Befolkningspyramid (stapeldiagram)
 40;Befolkning;Befolkningspyramid 1978 - 2020 (animerad);;SCBs befolkningsdata;Befolkningspyramid (stapeldiagram)
+41;Politik;Cirkeldiagram av röstandelar (riksdagsval) över tid;;SCBs demokratidata;Cirkeldiagram
+42;Politik;Röstandelar över tid (linje per parti);;SCBs demokratidata;Tidsdiagram
+43;Politik;Andel i Sverige mot andel i Malmö;;SCBs demokratidata;Linjediagram - två variabler
+44;Politik;Jämförelse mellan andel i Sverige och andel i Malmö;;SCBs demokratidata;Spridningsdiagram med faktor som axel (differensgraf)
+45;Politik;Jämförelse mellan andel i Sverige och andel i Malmö, centrerad kring andel i Sverige;;SCBs demokratidata;Stapeldiagram (horisontella staplar)
+46;Politik;Jämförelse mellan andel i Sverige och andel i Malmö, centrerad kring andel i Sverige, log-skala;;SCBs demokratidata;Stapeldiagram (horisontella staplar)
+47;Politik;Stapeldiagram över röstandelar, fyllda staplar;;SCBs demokratidata;Stapeldiagram (fyllda staplar)
+48;Politik;Cirkeldiagram över tid, animerat;;SCBs demokratidata;Cirkeldiagram
+49;Politik;Röstandelar per kommun (Malmö och kranskommuner);;SCBs demokratidata;Linjediagram
+50;Politik;Lådagram, röstandelar för landets kommuner, Malmö som punkt;;SCBs demokratidata;Lådagram
+51;Politik;Röstandel per parti, multipla parvisa linjediagram;;SCBs demokratidata;Linjediagram - två variabler
+52;Politik;Spridningsdiagram, alla partier mot varandra (parvis), Malmö som röd punkt;;SCBs demokratidata;Spridningsdiagram
+53;Politik;Score-plot, från PCA över landets kommuner;;SCBs demokratidata;Spridningsdiagram

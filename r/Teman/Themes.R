@@ -44,8 +44,7 @@ theme_mg2_mff <- function() {
           strip.text = element_text(color = "white"))
 }
 
-# Theme 3. Map 1
-
+# Theme 3. Map 1 ----
 theme_mg3 <- function() {
   bg_col <- "#F5F8DC"
   text_col <- "black"
@@ -62,7 +61,7 @@ theme_mg3 <- function() {
           )
 }
 
-# Theme 4. Climate
+# Theme 4. Climate ----
 theme_mg4 <- function() {
   bg_col <- c("#ff5555", "#ffffff")
   text_col <- "black"
@@ -81,3 +80,19 @@ theme_mg4 <- function() {
     )
 }
 
+# Theme 5. Politics ----
+theme_mg5 <- function() {
+  bg_col <- rep("#110000", 2)
+  text_col <- "white"
+  
+  theme_bw() +
+    theme(text = element_text(family = "Garamond", color = text_col, size = 16),
+          panel.background = element_rect(fill = bg_col[2], color = bg_col[1]),
+          plot.background = element_rect(fill = bg_col[1], color = bg_col[1]),
+          axis.text = element_text(color = text_col),
+          plot.title = element_text(color = text_col),
+          legend.background = element_rect(fill = NA),
+          legend.key = element_rect(fill = bg_col[1], color = bg_col[1]),
+          legend.title = element_blank()
+    )
+}

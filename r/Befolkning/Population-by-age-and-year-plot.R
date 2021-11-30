@@ -189,3 +189,19 @@ g1 <- ggplot(dat_temp, aes(Ålder, Antal_temp, fill = Kön)) +
   ease_aes()
 
 animate(g1, nframes = 300)
+
+# Population pyramid but filled by marriage status, mg54 ----
+mg54 <- dat %>% 
+  filter(År == 2020, Ålder < 101) %>% 
+  mutate(Antal_temp = ifelse(Kön == "Kvinnor", -Antal, Antal),
+         Civilstånd = ordered(Civilstånd, c("änkor/änklingar", "skilda", "gifta", "ogifta"))) %>% 
+  ggplot(aes(Ålder, Antal_temp, fill = Civilstånd)) + 
+  geom_bar(stat = "identity", position = position_fill(), width = 1) +
+  # geom_hline(yintercept = seq(-0.75,0.75,0.25), col = "grey80") +
+  geom_vline(xintercept = seq(25,75,25)) +
+  geom_hline(yintercept = 0) +
+  coord_flip() +
+  facet_wrap(~ Kön, scales = "free_x") +
+  scale_y_continuous(expand = c(0,0)) +
+  scale_x_continuous(expand = c(0,0))
+mg54
