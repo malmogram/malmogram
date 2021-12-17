@@ -52,3 +52,18 @@ ID;Tema;Motiv;Kommentar;Källor;Graftyp
 51;Politik;Röstandel per parti, multipla parvisa linjediagram;;SCBs demokratidata;Linjediagram - två variabler
 52;Politik;Spridningsdiagram, alla partier mot varandra (parvis), Malmö som röd punkt;;SCBs demokratidata;Spridningsdiagram
 53;Politik;Score-plot, från PCA över landets kommuner;;SCBs demokratidata;Spridningsdiagram
+54;Befolkning;Civilstånd per ålder, horisontalt stapeldiagram. Efter en du Bois-graf;;SCBs befolkningsdata;Stapeldiagram (fyllda staplar)
+55;Natur;Malmö trädkarta, reproduktion av original;;Malmö stads trädkarta;Karta
+56;Natur;Malmö trädkarta, efter kategori och ursprung;;Malmö stads trädkarta;Karta
+57;Natur;Malmö trädkarta, efter planteringsårtionde;;Malmö stads trädkarta;Karta
+58;Natur;Malmö trädkarta, täthetskarta;;Malmö stads trädkarta;Karta
+59;Natur;Antal träd per årtionde, fyllda efter kategori;;Malmö stads trädkarta;Stapeldiagram
+60;Natur;Antal träd per årtionde, fylla efter kategori och ursprung;;Malmö stads trädkarta;Stapeldiagram
+61;Natur;Antal träd per år sedan 2000;;Malmö stads trädkarta;Stapeldiagram
+62;Natur;Antal träd bland 20 vanligaste arter;;Malmö stads trädkarta;Stapeldiagram
+63;Natur;Malmö trädkarta, tio vanligaste arter;;Malmö stads trädkarta;Stapeldiagram
+64;Natur;Antal träd, vanligaste arter, Kungs- och slottsparken;;Malmö stads trädkarta;Stapeldiagram
+65;Natur;Trädkarta, Kungs- och slottsparken;;Malmö stads trädkarta;Karta
+66;Natur;Antal träd, vanligaste arter, Pildammsparken;;Malmö stads trädkarta;Stapeldiagram
+67;Natur;Trädkarta, Pildammsparken;;Malmö stads trädkarta;Karta
+68;Natur;Trädkarta, Pildammsparken, efter planteringsår;;Malmö stads trädkarta;Karta
