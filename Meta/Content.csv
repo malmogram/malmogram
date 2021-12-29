@@ -67,3 +67,16 @@ ID;Tema;Motiv;Kommentar;Källor;Graftyp
 66;Natur;Antal träd, vanligaste arter, Pildammsparken;;Malmö stads trädkarta;Stapeldiagram
 67;Natur;Trädkarta, Pildammsparken;;Malmö stads trädkarta;Karta
 68;Natur;Trädkarta, Pildammsparken, efter planteringsår;;Malmö stads trädkarta;Karta
+
+81;Transport och kommunikationer;Årlig resor (biltrafik);;Oresund.com, via Trafikverket;Stapeldiagram
+82;Transport och kommunikationer;Fullständig tidslinje (biltrafik);;Oresund.com, via Trafikverket;Tidsdiagram
+83;Transport och kommunikationer;Resor per månad, 2017-2021;;Oresund.com, via Trafikverket;Tidsdiagram
+84;Transport och kommunikationer;Mosaik, antal resor per månad;;Oresund.com, via Trafikverket;Mosaik
+85;Transport och kommunikationer;Årliga resor (biltrafik), uppdelat efter fordonstyp;;Oresund.com, via Trafikverket;Stapeldiagram
+86;Transport och kommunikationer;Årliga resor uppdelat i smågrafer per fordonstyp;;Oresund.com, via Trafikverket;Tidsdiagram
+87;Transport och kommunikationer;Månadsvariation per fordonstyp;;Oresund.com, via Trafikverket;Tidsdiagram
+88;Transport och kommunikationer;Resor per månad, småfönster efter fordonstyp;;Oresund.com, via Trafikverket;Tidsdiagram
+89;Transport och kommunikationer;Tågresor per år;;Oresund.com, via Trafikverket;Tidsdiagram
+90;Transport och kommunikationer;Tåg per år, till och från Malmö;;Oresund.com, via Trafikverket;Tidsdiagram
+91;Transport och kommunikationer;Kumulativt antal tåg, till och från Malmö;;Oresund.com, via Trafikverket;Tidsdiagram
+91;Transport och kommunikationer;Kumulativ differens i antal tåg, till och från Malmö;;Oresund.com, via Trafikverket;Tidsdiagram
