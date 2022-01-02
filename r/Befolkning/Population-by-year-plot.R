@@ -23,15 +23,17 @@ dat_merged <- dat_mun %>%
 # Plot ----
 ## Population by year. Malmö only. mg1 ----
 mg1 <- ggplot(dat_merged, aes(År, Befolkning / 1000)) +
-  geom_line(col = "white") +
+  geom_line(col = "white", size = 1.5) +
   #geom_point(col = "white") +
   ylab("Befolkning (tusental)") +
   ggtitle("Malmö, befolkning över tid (1850 - 2020)") +
-  ylim(0, 400)
-mg1 + theme_mg1()
+  ylim(0, 400) +
+  labs(caption = "Källa: SCB, http://www.scb.se/be0101\nMalmögram 1\n2 januari 2022") +
+  theme_mg1()
+ggsave("Output/Population-by-year.png", mg1, width = 8, height = 5, units = "in")
 
 ## Population change per year. Malmö only. mg2 ----
-dat_merged %>% 
+mg2 <- dat_merged %>% 
   filter(År >= 1950) %>% 
   mutate(Diff = Befolkning - lag(Befolkning)) %>% 
   ggplot(aes(År, Diff)) +
@@ -39,8 +41,10 @@ dat_merged %>%
   geom_point(col = "white") +
   ggtitle("Malmö, befolkningsförändring mot föregående år (1950 - 2020)") +
   coord_cartesian(xlim = c(1950, 2025)) +
+  labs(caption = "Källa: SCB, http://www.scb.se/be0101\nMalmögram 2\n2 januari 2022") +
   scale_x_continuous(breaks = seq(1950, 2025, 25)) +
   theme_mg1()
+ggsave("Output/Population-change-by-year.png", mg2, width = 8, height = 5, units = "in")
 
 ## Population by year, divided by total national population. mg3 ----
 dat_temp <- dat_mun %>% 
@@ -48,7 +52,7 @@ dat_temp <- dat_mun %>%
   mutate(Totalbefolkning = sum(Befolkning),
          Proportion = Befolkning / Totalbefolkning) %>% 
   ungroup()
-ggplot(dat_temp, aes(År, Proportion, group = Kommun)) +
+mg3 <- ggplot(dat_temp, aes(År, Proportion, group = Kommun)) +
   geom_line(data = dat_temp %>% filter(Kommun %in% c("Stockholm", "Göteborg", "Uppsala", "Linköping")), 
             col = "grey60") +
   geom_line(data = dat_temp %>% filter(Kommun == "Malmö"), col = "white", size = 1) +
@@ -61,7 +65,9 @@ ggplot(dat_temp, aes(År, Proportion, group = Kommun)) +
             hjust = 0, col = "white") +
   ggtitle("Malmö kommun, befolkning som andel av Sveriges befolkning (1950 - 2020)") +
   coord_cartesian(xlim = c(1950, 2030)) +
+  labs(caption = "Källa: SCB, http://www.scb.se/be0101\nMalmögram 3\n2 januari 2022") +
   theme_mg1()
+ggsave("Output/Population-proportion-by-year.png", mg3, width = 8, height = 5, units = "in")
 
 ## Population by year, Malmö and satellites, divided by total regional population. mg4 ----
 dat_temp <- dat_mun %>% 
@@ -93,13 +99,15 @@ g2 <- ggplot(dat_temp %>% filter(!(Kommun %in% c("Malmö", "Lund", "Trelleborg")
   geom_line(col = "grey60") +
   geom_text(aes(x = 2022, label = Kommun), 
             data = dat_temp %>% filter(År == 2020, !(Kommun %in% c("Malmö", "Lund", "Trelleborg"))),
-            hjust = 0, col = "grey60") +
+            hjust = 0, col = "grey60", size = 2) +
   ylab("") +
   scale_y_continuous(breaks = c(0, 0.02, 0.04, 0.06)) +
   coord_cartesian(xlim = c(1950, 2030), ylim = c(0, 0.065)) +
+  labs(caption = "Källa: SCB, http://www.scb.se/be0101\nMalmögram 4\n2 januari 2022") +
   theme_mg1()
 
-g1 / g2 + plot_layout(height = c(2, 1))
+mg4 <- g1 / g2 + plot_layout(height = c(2, 1))
+ggsave("Output/Population-proportion-by-year.png", mg4, width = 8, height = 10, units = "in")
 
 ## Population path, Malmö against Sweden, 1950 - 2020. mg5 ----
 dat_temp <- dat_mun %>% 
