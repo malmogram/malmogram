@@ -16,7 +16,8 @@ theme_mg1 <- function() {theme_bw() +
           plot.title = element_text(color = "white"),
           axis.ticks = element_line(color = "#000077"),
           legend.background = element_rect(fill = NA),
-          legend.key = element_rect(fill = "#000077"))
+          legend.key = element_rect(fill = "#000077"),
+          plot.caption = element_text(size = 7))
 }
 
 # Theme 2. MFF ----
