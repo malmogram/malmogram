@@ -95,7 +95,7 @@ g1 <- ggplot(dat_temp, aes(År, Proportion, group = Kommun)) +
         axis.title.x = element_blank())
 
 g2 <- ggplot(dat_temp %>% filter(!(Kommun %in% c("Malmö", "Lund", "Trelleborg"))), 
-       aes(År, Proportion, group = Kommun)) +
+             aes(År, Proportion, group = Kommun)) +
   geom_line(col = "grey60") +
   geom_text(aes(x = 2022, label = Kommun), 
             data = dat_temp %>% filter(År == 2020, !(Kommun %in% c("Malmö", "Lund", "Trelleborg"))),
@@ -107,7 +107,7 @@ g2 <- ggplot(dat_temp %>% filter(!(Kommun %in% c("Malmö", "Lund", "Trelleborg")
   theme_mg1()
 
 mg4 <- g1 / g2 + plot_layout(height = c(2, 1))
-ggsave("Output/Population-proportion-by-year.png", mg4, width = 8, height = 10, units = "in")
+ggsave("Output/Population-proportion-by-year-satellites.png", mg4, width = 8, height = 10, units = "in")
 
 ## Population path, Malmö against Sweden, 1950 - 2020. mg5 ----
 dat_temp <- dat_mun %>% 
@@ -132,7 +132,9 @@ mg5 <- ggplot(dat_temp, aes(Sverige, Malmö)) +
             col = "white", size = 3, family = "Garamond") +
   scale_x_continuous(breaks = 1000000 * 7:10, labels = c("7 000", "8 000", "9 000", "10 000")) +
   scale_y_continuous(breaks = 100000 * c(2, 2.5, 3, 3.5), labels = c(200, 250, 300, 350)) +
+  labs(caption = "Källa: SCB, http://www.scb.se/be0101\nMalmögram 5\n2 januari 2022") +
   theme_mg1()
+ggsave("Output/Population-path-Malmo-to-Sweden.png", mg5, width = 8, height = 5, units = "in")
 
 ## Population by year, Malmö against rest of Stormalmö, 1950 - 2020. mg6 ----
 dat_temp <- dat_mun %>% 
@@ -143,12 +145,14 @@ dat_temp <- dat_mun %>%
   summarise(Befolkning = sum(Befolkning) / 1000) %>% 
   mutate(Region = ordered(Region, c("Malmö", "Lund", "Övriga stormalmö")))
 
-ggplot(dat_temp, aes(År, Befolkning, color = Region)) +
+mg6 <- ggplot(dat_temp, aes(År, Befolkning, color = Region)) +
   geom_line(size = 2) +
   scale_color_manual(values = c("#aa0000", "#ddddff", "#5555ff")) +
   labs(title = "Befolkning i Malmö, Lund och övriga stormalmö, 1950 - 2020",
-       y = "Befolkning (tusental)") +
+       y = "Befolkning (tusental)",
+       caption = "Källa: SCB, http://www.scb.se/be0101\nMalmögram 6\n2 januari 2022") +
   theme_mg1()
+ggsave("Output/Population-by-year-Malmo-and-neighbours.png", mg6, width = 8, height = 5, units = "in")
 
 ## Population by year, Malmö. mg7 ----
 dat_prog <- read_csv("Data/Befolkning/Data-Population-forecast.csv") %>% 
@@ -161,12 +165,14 @@ dat_temp <- dat_mun %>%
   mutate(Befolkning = Befolkning / 1000) %>% 
   mutate(Typ = ordered(Typ, c("Verklig", "Prognos")))
 
-ggplot(dat_temp, aes(År, Befolkning, col = Typ)) +
+mg7 <- ggplot(dat_temp, aes(År, Befolkning, col = Typ)) +
   geom_line(size = 0.1) +
   geom_point() +
   scale_color_manual(values = c("#aa0000", "#ddddff")) +
   labs(title = "Befolkning i Malmö. Verkliga siffror 1990 - 2020, prognos 2020 - 2031",
-       subtitle = "Prognos från Stadskontoret, Analys och hållbarhet - Befolkningsprognos Malmö stad 2021-2031",
-       y = "Befolkning (tusental)") +
+       y = "Befolkning (tusental)",
+       caption = "Källa: SCB, http://www.scb.se/be0101\nMalmö Stad, Stadskontoret, Analys och hållbarhet - Befolkningsprognos Malmö stad 2021-2031\n\nMalmögram 7\n2 januari 2022") +
   theme_mg1() +
   theme(legend.title = element_blank())
+
+ggsave("Output/Population-prognosis.png", mg7, width = 8, height = 5, units = "in")
