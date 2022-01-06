@@ -30,7 +30,7 @@ mg1 <- ggplot(dat_merged, aes(År, Befolkning / 1000)) +
   ylim(0, 400) +
   labs(caption = "Källa: SCB, http://www.scb.se/be0101\nMalmögram 1\n2 januari 2022") +
   theme_mg1()
-ggsave("Output/Population-by-year.png", mg1, width = 8, height = 5, units = "in")
+# ggsave("Output/Population-by-year.png", mg1, width = 8, height = 5, units = "in")
 
 ## Population change per year. Malmö only. mg2 ----
 mg2 <- dat_merged %>% 
@@ -44,7 +44,7 @@ mg2 <- dat_merged %>%
   labs(caption = "Källa: SCB, http://www.scb.se/be0101\nMalmögram 2\n2 januari 2022") +
   scale_x_continuous(breaks = seq(1950, 2025, 25)) +
   theme_mg1()
-ggsave("Output/Population-change-by-year.png", mg2, width = 8, height = 5, units = "in")
+# ggsave("Output/Population-change-by-year.png", mg2, width = 8, height = 5, units = "in")
 
 ## Population by year, divided by total national population. mg3 ----
 dat_temp <- dat_mun %>% 
@@ -67,7 +67,7 @@ mg3 <- ggplot(dat_temp, aes(År, Proportion, group = Kommun)) +
   coord_cartesian(xlim = c(1950, 2030)) +
   labs(caption = "Källa: SCB, http://www.scb.se/be0101\nMalmögram 3\n2 januari 2022") +
   theme_mg1()
-ggsave("Output/Population-proportion-by-year.png", mg3, width = 8, height = 5, units = "in")
+# ggsave("Output/Population-proportion-by-year.png", mg3, width = 8, height = 5, units = "in")
 
 ## Population by year, Malmö and satellites, divided by total regional population. mg4 ----
 dat_temp <- dat_mun %>% 
@@ -107,7 +107,7 @@ g2 <- ggplot(dat_temp %>% filter(!(Kommun %in% c("Malmö", "Lund", "Trelleborg")
   theme_mg1()
 
 mg4 <- g1 / g2 + plot_layout(height = c(2, 1))
-ggsave("Output/Population-proportion-by-year-satellites.png", mg4, width = 8, height = 10, units = "in")
+# ggsave("Output/Population-proportion-by-year-satellites.png", mg4, width = 8, height = 10, units = "in")
 
 ## Population path, Malmö against Sweden, 1950 - 2020. mg5 ----
 dat_temp <- dat_mun %>% 
@@ -132,9 +132,10 @@ mg5 <- ggplot(dat_temp, aes(Sverige, Malmö)) +
             col = "white", size = 3, family = "Garamond") +
   scale_x_continuous(breaks = 1000000 * 7:10, labels = c("7 000", "8 000", "9 000", "10 000")) +
   scale_y_continuous(breaks = 100000 * c(2, 2.5, 3, 3.5), labels = c(200, 250, 300, 350)) +
-  labs(caption = "Källa: SCB, http://www.scb.se/be0101\nMalmögram 5\n2 januari 2022") +
+  labs(title = "Malmö mot Sveriges befolkning över tid",
+       caption = "Rak linje anger 2020 års andel malmöbor.\nKälla: SCB, http://www.scb.se/be0101\nMalmögram 5\n2 januari 2022") +
   theme_mg1()
-ggsave("Output/Population-path-Malmo-to-Sweden.png", mg5, width = 8, height = 5, units = "in")
+# ggsave("Output/Population-path-Malmo-to-Sweden.png", mg5, width = 8, height = 5.3, units = "in")
 
 ## Population by year, Malmö against rest of Stormalmö, 1950 - 2020. mg6 ----
 dat_temp <- dat_mun %>% 
@@ -152,7 +153,7 @@ mg6 <- ggplot(dat_temp, aes(År, Befolkning, color = Region)) +
        y = "Befolkning (tusental)",
        caption = "Källa: SCB, http://www.scb.se/be0101\nMalmögram 6\n2 januari 2022") +
   theme_mg1()
-ggsave("Output/Population-by-year-Malmo-and-neighbours.png", mg6, width = 8, height = 5, units = "in")
+# ggsave("Output/Population-by-year-Malmo-and-neighbours.png", mg6, width = 8, height = 5, units = "in")
 
 ## Population by year, Malmö. mg7 ----
 dat_prog <- read_csv("Data/Befolkning/Data-Population-forecast.csv") %>% 
@@ -175,4 +176,4 @@ mg7 <- ggplot(dat_temp, aes(År, Befolkning, col = Typ)) +
   theme_mg1() +
   theme(legend.title = element_blank())
 
-ggsave("Output/Population-prognosis.png", mg7, width = 8, height = 5, units = "in")
+# ggsave("Output/Population-prognosis.png", mg7, width = 8, height = 5, units = "in")
