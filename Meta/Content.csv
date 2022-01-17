@@ -91,3 +91,11 @@ ID;Tema;Motiv;Kommentar;Källor;Graftyp
 90;Transport och kommunikationer;Tåg per år, till och från Malmö;;Oresund.com, via Trafikverket;Tidsdiagram
 91;Transport och kommunikationer;Kumulativt antal tåg, till och från Malmö;;Oresund.com, via Trafikverket;Tidsdiagram
 92;Transport och kommunikationer;Kumulativ differens i antal tåg, till och från Malmö;;Oresund.com, via Trafikverket;Tidsdiagram
+93;Utbildning;Antal kurser per termin;;UHR - Universitets- och högskolerådet;Stapeldiagram
+94;Utbildning;Antal förstahandssökande per termin;;UHR - Universitets- och högskolerådet;Stapeldiagram
+95;Utbildning;Antal accepterade sökande per termin;;UHR - Universitets- och högskolerådet;Stapeldiagram
+96;Utbildning;Antal kurser per ämne;;UHR - Universitets- och högskolerådet;Stapeldiagram
+97;Utbildning;Antal sökande per program;;UHR - Universitets- och högskolerådet;Stapeldiagram
+98;Utbildning;Antal accepterade sökande per termin, uppdelat efter kön;;UHR - Universitets- och högskolerådet;Stapeldiagram
+99;Utbildning;Antal sökande till specialpedagogprogrammet;;UHR - Universitets- och högskolerådet;Stapeldiagram
+100;Utbildning;Antal sökande till program, total över tid;;UHR - Universitets- och högskolerådet;Linjediagram

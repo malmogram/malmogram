@@ -42,7 +42,8 @@ theme_mg2_mff <- function() {
           legend.background = element_rect(fill = NA),
           legend.key = element_rect(fill = bg_col),
           strip.background = element_rect(fill = text_col),
-          strip.text = element_text(color = "white"))
+          strip.text = element_text(color = "white"), 
+          plot.caption.position = "plot")
 }
 
 # Theme 3. Map 1 ----
@@ -54,6 +55,7 @@ theme_mg3 <- function() {
     theme(panel.grid = element_blank()) +
     theme(text = element_text(family = "Garamond", color = text_col),
           panel.background = element_rect(fill = bg_col),
+          plot.background = element_rect(fill = bg_col, color = bg_col),
           axis.text = element_text(color = text_col),
           plot.title = element_text(color = text_col),
           legend.background = element_rect(fill = NA),
@@ -64,12 +66,12 @@ theme_mg3 <- function() {
 
 # Theme 4. Climate ----
 theme_mg4 <- function() {
-  bg_col <- c("#ff5555", "#ffffff")
+  bg_col <- c("#ffbbbb", "#fffafa")
   text_col <- "black"
   
   theme_bw() +
     theme(panel.grid = element_blank()) +
-    theme(text = element_text(family = "Garamond", color = text_col, size = 16),
+    theme(text = element_text(family = "Garamond", color = text_col, size = 14),
           panel.background = element_rect(fill = bg_col[2]),
           plot.background = element_rect(fill = bg_col[1], color = bg_col[1]),
           axis.text = element_text(color = text_col),
@@ -77,7 +79,7 @@ theme_mg4 <- function() {
           legend.background = element_rect(fill = NA),
           legend.key = element_rect(fill = "white", color = "black"),
           legend.title = element_blank(),
-          legend.text = element_text(size = 20)
+          legend.text = element_text(size = 15)
     )
 }
 

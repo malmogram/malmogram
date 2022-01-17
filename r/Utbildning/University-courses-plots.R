@@ -89,3 +89,31 @@ dat_uni_wide %>%
   geom_text(aes(x = Kvinnor + Män, label = paste(Män, "/", Kvinnor)), . %>% filter(name == "Kvinnor"), hjust = 0, size = 2.5, nudge_x = 5, nudge_y = 0.1) +
   labs(x = "Antal sökande", y = "Program", title = "Antal antagna per program. Malmö universitet HT21") +
   theme(legend.title = element_blank())
+
+# Applicants to Special pedagog programme, mg99 ----
+dat_uni_wide %>% 
+  filter(grepl("Specialpedagog", anmälningsalternativ), utbildningstyp == "Program") %>% 
+  select(Termin, termin, anmälningskod, anmälningsalternativ, studietakt, sok.sökande, sok.kvinnligaFörstahandsökande, sok.manligaFörstahandsökande) %>% 
+  filter(studietakt == 100) %>% 
+  mutate(År = as.numeric(paste0(20, substring(Termin, 3, 4)))) %>% 
+  select(År, sok.kvinnligaFörstahandsökande, sok.manligaFörstahandsökande) %>% 
+  pivot_longer(-År) %>% 
+  mutate(Kön = ifelse(grepl("kv", name), "Kvinnor", "Män")) %>% 
+  ggplot(aes(År, value, fill = Kön)) +
+  geom_col(color = "black")
+
+# Total number of applicants to programmes, mg100 ----
+dat_uni_wide %>% 
+  filter(utbildningstyp == "Program") %>% 
+  select(Termin, termin, anmälningskod, anmälningsalternativ, studietakt, sok.kvinnligaFörstahandsökande, sok.manligaFörstahandsökande) %>% 
+  mutate(År = as.numeric(paste0(20, substring(Termin, 3, 4)))) %>% 
+  select(År, sok.kvinnligaFörstahandsökande, sok.manligaFörstahandsökande) %>% 
+  pivot_longer(-År) %>% 
+  mutate(Kön = ifelse(grepl("kv", name), "Kvinnor", "Män")) %>% 
+  group_by(År, Kön) %>% 
+  summarise(value = sum(value, na.rm = T)) %>% 
+  ggplot(aes(År, value, color = Kön)) +
+  geom_line() +
+  annotate("point", x = 2010, y = 0, col = "transparent") +
+  labs(title = "Antal förstahandsökande till utbildningsprogram vid Malmö högskola (universitet), 2009-21", y = "Antal förstahandssökande")
+

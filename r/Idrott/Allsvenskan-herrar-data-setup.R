@@ -9,7 +9,7 @@
 library(tidyverse)
 
 # Import
-dat <- read_csv("Data/Idrott/Allsvenskan, herrar, 1924-2020.csv") %>% 
+dat <- read_csv("Data/Idrott/Allsvenskan, herrar, 1924-2021.csv") %>% 
   mutate(Säsong = gsub("_19", "-", Säsong),
          id = 1:n())
 
@@ -29,5 +29,5 @@ dat_long <- dat %>%
 
 allsvenska_segrar <- c(1944, 1949, 1950, 1951, 1953, 1965, 1967, 1970, 1971, 1974, 
                        1975, 1977, 1985, 1986, 1987, 1988, 1989, 2004, 2010, 2013, 
-                       2014, 2016, 2017, 2020)
+                       2014, 2016, 2017, 2020, 2021)
 mff_cols <- c("#A7D7FF", "#0091D2", "#005c86", "#DD3838", "#E2F1FF")
