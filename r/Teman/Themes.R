@@ -61,7 +61,7 @@ theme_mg3 <- function() {
           legend.background = element_rect(fill = NA),
           legend.key = element_rect(fill = bg_col),
           legend.title = element_blank()
-          )
+    )
 }
 
 # Theme 4. Climate ----
@@ -98,4 +98,25 @@ theme_mg5 <- function() {
           legend.key = element_rect(fill = bg_col[1], color = bg_col[1]),
           legend.title = element_blank()
     )
+}
+
+
+# Theme 6. Trees ----
+theme_trees <- function() {
+  bg_col <- "#004d00"
+  text_col <- "white"
+  
+  theme(text = element_text(family = "Garamond", color = text_col, size = 16),
+        panel.background = element_rect(fill = bg_col[1], color = "#ddeedd"),
+        plot.background = element_rect(fill = bg_col[1], color = bg_col[1]),
+        axis.text = element_text(color = text_col),
+        plot.title = element_text(color = text_col),
+        legend.background = element_rect(fill = NA),
+        legend.key = element_rect(fill = bg_col[1], color = bg_col[1]),
+        legend.title = element_blank(),
+        panel.grid = element_blank(),
+        strip.background = element_rect(fill = "#004d00", color = "white"),
+        strip.text = element_text(color = "white"),
+        plot.caption.position = "plot"
+  )
 }

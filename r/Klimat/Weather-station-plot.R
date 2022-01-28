@@ -13,6 +13,7 @@ library(ggridges)
 
 # Import
 source("R/Klimat/Weather-station-setup.R", encoding = "UTF-8")
+source("r/Teman/Themes.R", encoding = "UTF-8")
 
 # Mean temperature by time, mg22 ----
 g1 <- dat_weatherstation %>% 
@@ -222,7 +223,7 @@ dat_temp <- dat_weatherstation %>%
           Timme = hour(`Tid (UTC)`)) %>%
   filter(Timme == 12) %>% 
   filter(Årsdag <= 365) %>% 
-  filter(År >= 1950, År < 2011) %>% 
+  filter(År >= 1950, År < 2020) %>% 
   group_by(Årsdag, År) %>% 
   summarise(Lufttemperatur = mean(Lufttemperatur)) %>% 
   ungroup() %>% group_by(Årsdag) %>% 
@@ -237,7 +238,7 @@ mg28 <- dat_temp %>%
   geom_hline(yintercept = 0) +
   scale_fill_manual(values = c("#5555ff", "#ff5555")) +
   scale_y_continuous(breaks = seq(-15,15,15)) +
-  labs(title = "Temperatur per dag, Malmö, kl 12, 1950 - 2021",
+  labs(title = "Temperatur per dag, Malmö, kl 12, 1950 - 2020",
        caption = "Färg anger om dagens temperatur är högre eller lägre än den genomsnittliga temperaturen för den årsdagen över samtliga år.
        
        Källa: SMHI meteorologiska observationer, https://www.smhi.se/data/meteorologi/ladda-ner-meteorologiska-observationer
@@ -249,7 +250,7 @@ mg28 <- dat_temp %>%
         legend.position = "bottom", 
         strip.background.x = element_blank(),
         strip.text.x = element_blank(),
-        strip.background.y = element_blank())
+        strip.background.y = element_blank(), axis.text = element_text(size = 5))
 mg28
 
 ggsave("Output/Klimat/Daily-air-temp.png", mg28, height = 7, width = 11)
