@@ -170,37 +170,45 @@ mg61
 ggsave("Output/Natur/Tree-map-trees-per-year-by-type-and-origin.png", mg61, height = 6, width = 8)
 
 # Tree species top 20, mg62 ----
-mg61 <- dat_trees %>% 
+mg62 <- dat_trees %>% 
   count(svenskt_namn, kategori, ursprung, sort = T) %>% 
   slice(1:20) %>% 
   mutate(svenskt_namn = fct_reorder(svenskt_namn, n)) %>% 
   ggplot(aes(n, svenskt_namn, fill = paste(kategori, ursprung))) +
-  geom_col(col = "black") +
-  labs(title = "",
+  geom_col(col = "black", width = 0.8) +
+  scale_fill_manual(values = c("#d2a679", "#ecd9c6", "#22aa22")) +
+  labs(title = "Malmö stads vanligaste träd",
+       x = "Antal", y = "Art",
        caption = "Källa: Malmö Stads trädkarta, 
        https://malmo.se/Stadsutveckling/Tema/Bebyggelse-och-utemiljoer/Trad-i-Malmo.html
        
        Malmögram 62
        23 januari 2022") +
-  theme_trees()
-mg61
+  theme_trees() +
+  theme(panel.grid.major.x = element_line(color = "white"), axis.ticks = element_blank(), text = element_text(size = 10))
+mg62
+
+ggsave("Output/Natur/Tree-map-most-common-trees.png", mg62, height = 6, width = 8)
 
 # Tree species top 10 map, mg63 ----
-mg62 <- dat_trees %>%
+mg63 <- dat_trees %>%
   filter(svenskt_namn %in% (dat_trees %>% 
                               count(svenskt_namn, sort = T) %>% slice(1:10) %>% pull(svenskt_namn))) %>% 
   ggplot(aes(X, Y, col = svenskt_namn)) +
   geom_point(size = 0.1) +
   geom_sf(data = dat_adm_mpol %>% st_transform(3008), fill = NA, inherit.aes = F) +
   guides(colour = guide_legend(override.aes = list(size=3))) +
-  labs(title = "",
+  labs(title = "Malmö Stads trädkarta för tio vanliga arter",
        caption = "Källa: Malmö Stads trädkarta, 
        https://malmo.se/Stadsutveckling/Tema/Bebyggelse-och-utemiljoer/Trad-i-Malmo.html
        
        Malmögram 63
-       23 januari 2022") +
-  theme_trees()
-mg62
+       29 januari 2022") +
+  theme_trees() +
+  theme(axis.text = element_blank(), axis.ticks = element_blank(), axis.title = element_blank())
+mg63
+
+ggsave("Output/Natur/Tree-map-most-common-trees-on-map.png", mg63, height = 10, width = 10)
 
 # Bar chart, Kungs- och slottsparken, mg64 ----
 dat_temp <- dat_trees_geo %>% 
@@ -208,13 +216,15 @@ dat_temp <- dat_trees_geo %>%
                     st_transform(3008) %>% 
                     filter(name == "Malmö Hus") %>% 
                     select(name)) %>%
+  mutate(X = st_coordinates(.)[,1], Y = st_coordinates(.)[,2]) %>% 
   group_by(svenskt_namn) %>% 
   mutate(n = n(),
          Art = ifelse(n > 50, svenskt_namn, "Övriga"),
          Familj = map_chr(vetenskapligt_namn, ~ strsplit(.x, " ")[[1]][1]))
 
-dat_temp %>% 
+mg64 <- dat_temp %>% 
   as_tibble() %>% 
+  group_by(X, Y) %>% slice(1) %>% ungroup() %>% 
   count(svenskt_namn, vetenskapligt_namn, kategori, ursprung, sort = T) %>% 
   mutate(Rang = rank(-n),
          Art = ifelse(Rang > 20, "Övriga", svenskt_namn)) %>% 
@@ -225,15 +235,21 @@ dat_temp %>%
   ggplot(aes(n, Art, fill = paste(kategori, ursprung))) + 
   geom_col(color = "black") +
   geom_text(aes(label = n), data = . %>% filter(Art != "Övriga"), 
-            size = 4, hjust = 0, nudge_x = 20) +
+            size = 4, hjust = 0, nudge_x = 20, color = "white", family = "Garamond") +
+  scale_fill_manual(values = c("#d2a679", "#ecd9c6", "#ccffcc", "#22aa22")) +
   theme(panel.grid.major.y = element_blank(), panel.grid.minor.y = element_blank()) +
-  labs(title = "",
+  labs(title = "Malmö Stads trädkarta. Antal träd i Kungs- och Slottsparken, per art",
+       x = "Antal",
        caption = "Källa: Malmö Stads trädkarta, 
        https://malmo.se/Stadsutveckling/Tema/Bebyggelse-och-utemiljoer/Trad-i-Malmo.html
        
        Malmögram 64
        23 januari 2022") +
-  theme_trees()
+  theme_trees() +
+  theme(text = element_text(size = 10), plot.title.position = "plot", axis.ticks = element_blank())
+mg64
+
+ggsave("Output/Natur/Tree-map-most-common-trees-Slottsparken.png", mg64, height = 10, width = 10)
 
 # Tree map, Kungs- och slottsparken, mg65 ----
 dat_temp <- dat_trees_geo %>% 
@@ -246,16 +262,33 @@ dat_temp <- dat_trees_geo %>%
          Art = ifelse(n > 229, svenskt_namn, "Övriga"),
          Familj = map_chr(vetenskapligt_namn, ~ strsplit(.x, " ")[[1]][1]))
 
-ggplot() +
+dat_water1 <- opq(dat_adm_mpol %>% filter(name == "Malmö Hus") %>% st_bbox()) %>%
+  add_osm_feature(key="water") %>%
+  osmdata_sf()
+
+dat_water2 <- opq(dat_adm_mpol %>% filter(name == "Malmö Hus") %>% st_bbox()) %>%
+  add_osm_feature(key="water", value = "canal") %>%
+  osmdata_sf()
+
+
+mg65 <- ggplot() +
   geom_sf(data = dat_temp %>% filter(Art == "Övriga"), alpha = 0.1) +
   geom_sf(aes(color = Art), data = dat_temp %>% filter(Art != "Övriga")) +
-  labs(title = "",
+  geom_sf(data = dat_water1$osm_polygons, fill = NA, color = "white") + 
+  geom_sf(data = dat_water2$osm_lines, color = "white") +
+  coord_sf(xlim = c(117356, 118191), ylim = c(6164034, 6164819)) +
+  scale_color_brewer(palette = "Set2") +
+  labs(title = "Malmö Stads trädkarta. Vanliga träd i Kungs- och Slottsparken",
        caption = "Källa: Malmö Stads trädkarta, 
        https://malmo.se/Stadsutveckling/Tema/Bebyggelse-och-utemiljoer/Trad-i-Malmo.html
        
        Malmögram 65
-       23 januari 2022") +
-  theme_trees()
+       29 januari 2022") +
+  theme_trees() +
+  theme(axis.text = element_blank(), axis.ticks = element_blank(), axis.title = element_blank())
+mg65
+
+ggsave("Output/Natur/Tree-map-most-common-trees-on-map-Slottsparken.png", mg65, height = 10, width = 10)
 
 # Bar chart, Pildammsparken, mg66 ----
 dat_temp <- dat_trees_geo %>% 
@@ -263,6 +296,7 @@ dat_temp <- dat_trees_geo %>%
                     st_transform(3008) %>% 
                     filter(name == "Pildammsparken") %>% 
                     select(name)) %>%
+  mutate(X = st_coordinates(.)[,1], Y = st_coordinates(.)[,2]) %>% 
   group_by(svenskt_namn) %>% 
   mutate(n = n(),
          Art = ifelse(n > 50, svenskt_namn, "Övriga"),
@@ -270,6 +304,7 @@ dat_temp <- dat_trees_geo %>%
 
 mg66 <- dat_temp %>% 
   as_tibble() %>% 
+  group_by(X, Y) %>% slice(1) %>% ungroup() %>% 
   count(svenskt_namn, vetenskapligt_namn, kategori, ursprung, sort = T) %>% 
   mutate(Rang = rank(-n),
          Art = ifelse(Rang > 20, "Övriga", svenskt_namn)) %>% 
@@ -280,16 +315,20 @@ mg66 <- dat_temp %>%
   ggplot(aes(n, Art, fill = paste(kategori, ursprung))) + 
   geom_col(color = "black") +
   geom_text(aes(label = n), data = . %>% filter(Art != "Övriga"), 
-            size = 3, hjust = 0, nudge_x = 50)  +
-  labs(title = "",
+            size = 3, hjust = 0, nudge_x = 50, color = "white", family = "Garamond")  +
+  scale_fill_manual(values = c("#d2a679", "#ecd9c6", "#ccffcc", "#22aa22")) +
+  labs(title = "Malmö Stads trädkarta. Antal träd i Pildammsparken per art",
+       x = "Antal",
        caption = "Källa: Malmö Stads trädkarta, 
        https://malmo.se/Stadsutveckling/Tema/Bebyggelse-och-utemiljoer/Trad-i-Malmo.html
        
        Malmögram 66
        23 januari 2022") +
   theme_trees() +
-  theme(panel.grid.major.y = element_blank(), panel.grid.minor.y = element_blank())
+  theme(text = element_text(size = 10), plot.title.position = "plot", axis.ticks = element_blank())
 mg66
+
+ggsave("Output/Natur/Tree-map-most-common-trees-Pildammssparken.png", mg66, height = 10, width = 10)
 
 # Tree map, Pildammsparken, mg67 ----
 dat_temp <- dat_trees_geo %>% 
@@ -305,14 +344,19 @@ dat_temp <- dat_trees_geo %>%
 mg67 <- ggplot() +
   geom_sf(data = dat_temp %>% filter(Art == "Övriga"), alpha = 0.1) +
   geom_sf(aes(color = Art), data = dat_temp %>% filter(Art != "Övriga")) +
-  labs(title = "",
+  scale_color_brewer(palette = "Set2") +
+  labs(title = "Malmö Stads trädkarta. Vanliga träd i Pildammsparken",
        caption = "Källa: Malmö Stads trädkarta, 
        https://malmo.se/Stadsutveckling/Tema/Bebyggelse-och-utemiljoer/Trad-i-Malmo.html
        
        Malmögram 67
-       23 januari 2022") +
-  theme_trees()
+       29 januari 2022") +
+  theme_trees() +
+  theme(axis.text = element_blank(), axis.ticks = element_blank(), axis.title = element_blank(),
+        text = element_text(size = 12))
 mg67
+
+ggsave("Output/Natur/Tree-map-most-common-trees-on-map-Pildammsparken.png", mg67, height = 10, width = 10)
 
 # Tree map, Pildammsparken, mg68 ----
 dat_temp <- dat_trees_geo %>% 
@@ -329,14 +373,19 @@ dat_temp <- dat_trees_geo %>%
 
 mg68 <- ggplot(dat_temp, aes(X, Y)) +
   geom_point(data = dat_temp %>% select(-planteringsar), alpha = 0.1, size = 0.1) +
-  geom_point(col = "red", size = 0.1) +
+  geom_point(col = "#ff4444", size = 0.1) +
   facet_wrap(~ planteringsar, ncol = 5) +
   coord_equal() +
-  labs(title = "",
+  labs(title = "Träd i Pildammsparken efter planteringsår",
        caption = "Källa: Malmö Stads trädkarta, 
        https://malmo.se/Stadsutveckling/Tema/Bebyggelse-och-utemiljoer/Trad-i-Malmo.html
        
        Malmögram 68
-       23 januari 2022") +
-  theme_trees()
+       29 januari 2022") +
+  theme_trees() +
+  theme(axis.text = element_blank(), axis.ticks = element_blank(), axis.title = element_blank(),
+        text = element_text(size = 12), panel.background = element_rect(color = NA), 
+        strip.background = element_blank())
 mg68
+
+ggsave("Output/Natur/Tree-map-Pildammsparken-by-year.png", mg68, height = 12, width = 15)
