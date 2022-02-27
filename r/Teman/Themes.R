@@ -87,18 +87,22 @@ theme_mg4 <- function() {
 
 # Theme 5. Politics ----
 theme_mg5 <- function() {
-  bg_col <- rep("#110000", 2)
+  bg_col <- rep("#660000", 2)
   text_col <- "white"
   
   theme_bw() +
-    theme(text = element_text(family = "Garamond", color = text_col, size = 16),
+    theme(text = element_text(family = "Garamond", color = text_col, size = 12),
           panel.background = element_rect(fill = bg_col[2], color = bg_col[1]),
           plot.background = element_rect(fill = bg_col[1], color = bg_col[1]),
           axis.text = element_text(color = text_col),
           plot.title = element_text(color = text_col),
           legend.background = element_rect(fill = NA),
           legend.key = element_rect(fill = bg_col[1], color = bg_col[1]),
-          legend.title = element_blank()
+          legend.title = element_blank(),
+          strip.background = element_blank(),
+          strip.text = element_text(color = "white"),
+          panel.border = element_rect(color = "white"), 
+          plot.caption.position = "plot"
     )
 }
 

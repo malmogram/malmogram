@@ -10,6 +10,7 @@ library(tidyverse)
 # Read setup file ----
 source("R/Kultur/Public-art-setup.R", encoding = "UTF-8")
 source("R/Geografi/Parts-of-the-City-setup.R", encoding = "UTF-8")
+source("R/Teman/Themes.R")
 dat_namn <- read_csv("Data/Allmänt/Tilltalsnamn-statistik-SCB.csv")
 
 # Re-used functions ----

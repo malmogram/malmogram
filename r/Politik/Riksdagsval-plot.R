@@ -17,16 +17,23 @@ source("r/Teman/Themes.R", encoding = "UTF-8")
 mg41 <- dat %>% 
   filter(Region == "Malmö") %>% 
   ggplot(aes(0, Antal, fill = Parti)) +
-  geom_bar(stat = "identity", position = position_fill(), col = "black") +
+  geom_bar(stat = "identity", position = position_fill(), col = "black", alpha = 1.0) +
   facet_wrap(~ År, ncol = 7) +
   xlim(-2,1) +
   coord_polar(theta = "y") +
+  scale_fill_manual(values = dat_parties$Färg) +
+  labs(title = "\nMalmö stad. Utfall i riksdagsval 1973 - 2018",
+       caption = "Källa: SCBs valstatistik, http://www.scb.se/me0104 
+       Malmögram 41
+       23 januari 2022") +
   theme_mg5() +
   theme(panel.grid = element_blank(),
         axis.text = element_blank(),
         axis.ticks = element_blank(),
         axis.title = element_blank())
 mg41
+
+ggsave("Output/Politik/Riksdag-circles-by-year.png", mg41, height = 4, width = 10)
 
 # Malmö, time series, mg42 ----
 dat_temp <- dat %>% 
@@ -38,16 +45,24 @@ dat_temp2 <- dat_temp %>% rename(Parti1 = Parti)
 
 mg42 <- dat_temp %>% 
   ggplot(aes(År, p, col = Parti)) +
-  geom_line(aes(col = NA, group = Parti1), data = dat_temp2, col = "grey80") +
-  geom_line(size = 2) +
+  geom_line(aes(col = NA, group = Parti1), data = dat_temp2, col = "#ffeeee", alpha = 0.5) +
+  geom_line(size = 1.5) +
   geom_point(size = 3) +
   scale_x_continuous(breaks = seq(1980, 2010, 10)) +
   facet_wrap(~ Parti) +
+  scale_color_manual(values = dat_parties$Färg) +
+  labs(title = "Malmö stad. Utfall i riksdagsval 1973 - 2018",
+       x = "År", y = "Andel röster",
+       caption = "Källa: SCBs valstatistik, http://www.scb.se/me0104 
+       Malmögram 42
+       11 februari 2022") +
   theme_bw() +
   theme_mg5() +
   theme(panel.grid.minor = element_blank(),
-        panel.grid.major = element_line(color = "grey10"))
+        panel.grid.major = element_line(color = "#550000"))
 mg42
+
+ggsave("Output/Politik/Riksdag-by-year-per-party.png", mg42, height = 8, width = 10)
 
 # Path-graph, Malmö and Sweden, mg43 ----
 dat_temp <- dat %>% 
@@ -64,12 +79,21 @@ dat_temp <- dat %>%
 mg43 <- dat_temp %>% 
   ggplot(aes(Sverige, Malmö, label = År, col = År)) + 
   geom_abline(intercept = 0, slope = 1, col = "white") +
-  geom_point(size = 3) +
   geom_path(size = 1) +
+  geom_point(size = 3) +
+  scale_color_gradient(low = "white", high = "black") +
   facet_wrap(~ Parti) +
+  labs(title = "Sverige mot Malmö. Utfall i riksdagsval 1973 - 2018", 
+       x = "Andel röster i Sverige", y = "Andel röster i Malmö",
+       caption = "Källa: SCBs valstatistik, http://www.scb.se/me0104 
+       Malmögram 43
+       11 februari 2022") +
   theme_mg5() +
-  theme(panel.grid = element_line(color = "grey10"))
+  theme(panel.grid = element_line(color = "#550000"),
+        panel.grid.minor = element_blank())
 mg43
+
+ggsave("Output/Politik/Riksdag-paths-per-party.png", mg43, height = 8, width = 10)
 
 # Point-line-comparison plot 2018, mg44 ----
 dat_temp <- dat %>% 
@@ -81,14 +105,26 @@ dat_temp <- dat %>%
   ungroup() %>% 
   filter(År == 2018) %>% 
   group_by(Parti) %>% 
-  mutate(Differens = sum(p) - 2 * sum(p * (Region == "Sverige")))
+  mutate(Differens = sum(p) - 2 * sum(p * (Region == "Sverige")),
+         p_Malmö = sum(p * (Region == "Malmö")))
 
-mg44 <- ggplot(dat_temp, aes(p, fct_reorder(Parti, p, sum), col = Region)) +
-  geom_line(aes(group = Parti), size = 2) +
-  geom_point(size = 4) +
+mg44 <- ggplot(dat_temp, aes(p, fct_reorder(Parti, p_Malmö, mean))) +
+  geom_line(aes(group = Parti, col = ifelse(Region == "Malmö", "Sverige", "Malmö")), size = 1, show.legend = F) +
+  geom_point(aes(fill = Region), size = 4, shape = 21) +
+  scale_color_manual(values = c("white", "black")) +
+  scale_fill_manual(values = c("white", "black")) +
+  labs(title = "Malmö och Sverige. Utfall i riksdagsval 2018", 
+       subtitle = "Malmöbor röstar i mycket mindre utsträckning än övriga landet.", 
+       x = "Andel röster", y = "Parti",
+       caption = "Källa: SCBs valstatistik, http://www.scb.se/me0104 
+       Malmögram 44
+       11 februari 2022") +
   theme_mg5() +
-  theme(panel.grid = element_line(color = "grey50"))
+  theme(panel.grid = element_line(color = "#550000"),
+        panel.grid.major.y = element_blank())
 mg44
+
+ggsave("Output/Politik/Riksdag-Sweden-to-Malmoe-comparison-2018.png", mg44, height = 6, width = 8)
 
 # Point-line-comparison centered on proportion for Sweden, mg45 ----
 dat_temp <- dat %>% 
@@ -143,7 +179,7 @@ valår <- c(unique(dat$År), 2022)
 foo <- function(x) min(valår[valår > x])
 
 mg47 <- dat %>% 
-  filter(Region == "Malmö", Parti != "ej röstande") %>% 
+  filter(Region == "Malmö") %>% 
   mutate(Slutår = map_dbl(År, foo),
          Antal = ifelse(is.na(Antal), 0, Antal)) %>% 
   group_by(År) %>% 
@@ -151,14 +187,55 @@ mg47 <- dat %>%
          p_cs = cumsum(p),
          p_cs_lower = lag(p_cs, default = 0)) %>% 
   ggplot(aes(xmin = År, xmax = Slutår, ymin = p_cs_lower, ymax = p_cs, fill = Parti)) +
-  geom_rect(col = "black") +
+  geom_rect(col = "black", alpha = 0.85) +
   geom_hline(yintercept = seq(0, 1, 0.25), col = "white", alpha = 0.5) +
   geom_vline(xintercept = c(1973, 2022), col = "white") +
+  scale_fill_manual(values = dat_parties$Färg) +
   scale_x_continuous(name = "År", breaks = valår, expand = c(0,0)) +
   scale_y_continuous(name = "Andel", expand = c(0,0)) +
+  labs(title = "Malmö i riksdagsvalen 1973 - 2018", 
+       x = "Andel röster", y = "Parti",
+       caption = "Källa: SCBs valstatistik, http://www.scb.se/me0104 
+       Malmögram 47
+       11 februari 2022") +
   theme(axis.ticks = element_blank()) +
-  theme_mg5()
+  theme_mg5() +
+  theme(panel.grid = element_blank(), axis.ticks = element_line(color = "white"))
 mg47
+
+ggsave("Output/Politik/Riksdag-Malmoe-bar-by-year.png", mg47, height = 6, width = 8)
+
+# Malmö, stacked bars over time, excluding non-voters, mg47b ----
+valår <- c(unique(dat$År), 2022)
+foo <- function(x) min(valår[valår > x])
+
+mg47b <- dat %>% 
+  filter(Region == "Malmö", !(Parti %in% c("övriga partier", "ogiltiga valsedlar", "ej röstande"))) %>% 
+  mutate(Slutår = map_dbl(År, foo),
+         Antal = ifelse(is.na(Antal), 0, Antal)) %>% 
+  group_by(År) %>% 
+  mutate(p = Antal / sum(Antal),
+         p_cs = cumsum(p),
+         p_cs_lower = lag(p_cs, default = 0)) %>% 
+  ggplot(aes(xmin = År, xmax = Slutår, ymin = p_cs_lower, ymax = p_cs, fill = Parti)) +
+  geom_rect(col = "black", alpha = 0.85) +
+  geom_hline(yintercept = seq(0, 1, 0.25), col = "white", alpha = 0.5) +
+  geom_vline(xintercept = c(1973, 2022), col = "white") +
+  scale_fill_manual(values = dat_parties$Färg) +
+  scale_x_continuous(name = "År", breaks = valår, expand = c(0,0)) +
+  scale_y_continuous(name = "Andel", expand = c(0,0)) +
+  labs(title = "Malmö i riksdagsvalen 1973 - 2018",
+       subtitle = "Enbart riksdagspartier (frånräknad icke-röstande, ogilitiga röster, övriga partier)",
+       x = "Andel röster", y = "Parti",
+       caption = "Källa: SCBs valstatistik, http://www.scb.se/me0104 
+       Malmögram 47
+       11 februari 2022") +
+  theme(axis.ticks = element_blank()) +
+  theme_mg5() +
+  theme(panel.grid = element_blank(), axis.ticks = element_line(color = "white"))
+mg47b
+
+ggsave("Output/Politik/Riksdag-Malmoe-bar-by-year-only-parties.png", mg47b, height = 6, width = 8)
 
 # Malmö, piecharts over time, animated, mg48 ----
 mg48 <- dat %>% 
@@ -166,6 +243,7 @@ mg48 <- dat %>%
   mutate(Antal = ifelse(is.na(Antal), 1, Antal)) %>% 
   ggplot(aes(0, Antal, fill = Parti)) +
   geom_bar(stat = "identity", position = position_fill(), col = "black") +
+  scale_fill_manual(values = dat_parties$Färg) +
   xlim(-2,1) +
   coord_polar(theta = "y") +
   theme_mg5() +
@@ -174,8 +252,11 @@ mg48 <- dat %>%
         axis.ticks = element_blank(),
         axis.title = element_blank()) +
   ease_aes() +
-  transition_time(År)
-mg48
+  transition_states(År, transition_length = 2, state_length = 4) +
+  labs(title = "Malmö i riksdagsvalet {closest_state}")
+
+animate(mg48, nframes = 400, width = 500, height = 400, fps = 40)
+anim_save("Output/Politik/Riksdag-Malmoe-pie-over-time.gif")
 
 # Malmö and neighbours, mg49 ----
 mg49 <- dat %>% 
@@ -202,12 +283,13 @@ dat_temp <- dat %>%
          Text = paste0(ifelse((Rank - 1) > (290 - Rank), "Högre", "Lägre"), " andel i ", 
                        pmin(Rank - 1, 290 - Rank), " kommuner"))
 mg50 <- dat_temp %>% 
-  ggplot(aes(p, Parti)) +
-  geom_boxplot(col = "white", fill = "grey60") +
+  ggplot(aes(p, fct_rev(Parti))) +
+  geom_boxplot(col = "white", fill = NA, width = 0.2) +
   geom_point(data = . %>% filter(Region == "Malmö"), fill = "red", shape = 21, size = 3) +
   geom_text(aes(x = 0.5, label = Text), data = . %>% filter(Region == "Malmö"), col = "white") +
   theme_mg5() +
-  theme(panel.grid = element_line(color = "grey30"))
+  theme(panel.grid = element_line(color = "#880000"),
+        panel.grid.major.y = element_blank())
 mg50
 
 # Malmö multiple scatterplots, mg51 ----
@@ -302,7 +384,7 @@ mg53 <- dat_temp %>%
             data = dat_loadings, col = "red") +
   geom_point(aes(PC1, PC2), data = dat_loadings, col = "red") +
   geom_segment(aes(xend = PC1, yend = PC2, x = 0, y = 0), 
-            data = dat_loadings, col = "red") +
+               data = dat_loadings, col = "red") +
   geom_polygon(aes(x, y), 
                data = tibble(t = seq(0, 2*pi, 0.05), x = loading_mult * sin(t), y = loading_mult * cos(t)), 
                col = "red", fill = NA, inherit.aes = F) +

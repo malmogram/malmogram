@@ -269,7 +269,7 @@ mg39 <- ggplot(dat_temp, aes(Ålder, Antal_temp, fill = Kön)) +
   labs(title = "Malmö stad, befolkningspyramid över tid",
        y = "Antal personer", x = "Ålder",
        caption = "Källa: SCB, http://www.scb.se/be0101
-       Malmögram 37, 5 februari 2022") +
+       Malmögram 39, 5 februari 2022") +
   theme_mg1() +
   theme(panel.grid.minor.x = element_line(color = "#333399"))
 mg39
