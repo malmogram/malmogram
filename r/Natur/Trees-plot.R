@@ -33,7 +33,7 @@ mg55 <- dat_adm_delomr %>%
         panel.background = element_blank(), plot.caption = element_text(size = 10))
 mg55
 
-ggsave("Output/Natur/Tree-map.png", mg55, height = 10, width = 10)
+ggsave("Output/Natur/055-Tree-map.png", mg55, height = 10, width = 10)
 
 # Tree map split by type and origin, mg56 ----
 mg56 <- dat_adm_delomr %>% 
@@ -54,7 +54,7 @@ mg56 <- dat_adm_delomr %>%
 
 mg56
 
-ggsave("Output/Natur/Tree-map-by-type-and-origin.png", mg56, height = 12, width = 12)
+ggsave("Output/Natur/056-Tree-map-by-type-and-origin.png", mg56, height = 12, width = 12)
 
 # Tree map by decade, mg57 ----
 mg57 <- dat_adm_delomr %>% 
@@ -74,7 +74,7 @@ mg57 <- dat_adm_delomr %>%
         panel.background = element_blank(), plot.caption = element_text(size = 10))
 mg57
 
-ggsave("Output/Natur/Tree-map-by-decade.png", mg57, height = 10, width = 16)
+ggsave("Output/Natur/057-Tree-map-by-decade.png", mg57, height = 10, width = 16)
 
 # Treemap, density, mg58 ----
 mg58 <- ggplot(dat_trees %>% filter(Årtionde != 0)) + 
@@ -93,7 +93,7 @@ mg58 <- ggplot(dat_trees %>% filter(Årtionde != 0)) +
 
 mg58
 
-ggsave("Output/Natur/Tree-map-density.png", mg58, height = 14, width = 14)
+ggsave("Output/Natur/058-Tree-map-density.png", mg58, height = 14, width = 14)
 
 # Number of trees per decade, fill by categori, mg59 ----
 g1 <- dat_trees %>% 
@@ -119,7 +119,7 @@ mg59 <- g1 + g2 +
   theme_trees()
 mg59
 
-ggsave("Output/Natur/Tree-map-trees-per-decade.png", mg59, height = 6, width = 10)
+ggsave("Output/Natur/059-Tree-map-trees-per-decade.png", mg59, height = 6, width = 10)
 
 # Number of trees per decade, fill by categori and origin, mg60 ----
 g1 <- dat_trees %>% 
@@ -142,12 +142,12 @@ mg60 <- g1 + g2 +
                   caption = "Källa: Malmö Stads trädkarta, 
        https://malmo.se/Stadsutveckling/Tema/Bebyggelse-och-utemiljoer/Trad-i-Malmo.html
        
-       Malmögram 56
+       Malmögram 60
        23 januari 2022") &
   theme_trees()
 mg60
 
-ggsave("Output/Natur/Tree-map-trees-per-decade-by-type-and-origin.png", mg60, height = 6, width = 10)
+ggsave("Output/Natur/060-Tree-map-trees-per-decade-by-type-and-origin.png", mg60, height = 6, width = 10)
 
 # Number of trees per year after 2000, mg61 ----
 mg61 <- dat_trees %>% 
@@ -167,7 +167,7 @@ mg61 <- dat_trees %>%
   theme(text = element_text(size = 12))
 mg61
 
-ggsave("Output/Natur/Tree-map-trees-per-year-by-type-and-origin.png", mg61, height = 6, width = 8)
+ggsave("Output/Natur/061-Tree-map-trees-per-year-by-type-and-origin.png", mg61, height = 6, width = 8)
 
 # Tree species top 20, mg62 ----
 mg62 <- dat_trees %>% 
@@ -188,7 +188,7 @@ mg62 <- dat_trees %>%
   theme(panel.grid.major.x = element_line(color = "white"), axis.ticks = element_blank(), text = element_text(size = 10))
 mg62
 
-ggsave("Output/Natur/Tree-map-most-common-trees.png", mg62, height = 6, width = 8)
+ggsave("Output/Natur/062-Tree-map-most-common-trees.png", mg62, height = 6, width = 8)
 
 # Tree species top 10 map, mg63 ----
 mg63 <- dat_trees %>%
@@ -208,7 +208,7 @@ mg63 <- dat_trees %>%
   theme(axis.text = element_blank(), axis.ticks = element_blank(), axis.title = element_blank())
 mg63
 
-ggsave("Output/Natur/Tree-map-most-common-trees-on-map.png", mg63, height = 10, width = 10)
+ggsave("Output/Natur/063-Tree-map-most-common-trees-on-map.png", mg63, height = 10, width = 10)
 
 # Bar chart, Kungs- och slottsparken, mg64 ----
 dat_temp <- dat_trees_geo %>% 
@@ -249,7 +249,7 @@ mg64 <- dat_temp %>%
   theme(text = element_text(size = 10), plot.title.position = "plot", axis.ticks = element_blank())
 mg64
 
-ggsave("Output/Natur/Tree-map-most-common-trees-Slottsparken.png", mg64, height = 10, width = 10)
+ggsave("Output/Natur/064-Tree-map-most-common-trees-Slottsparken.png", mg64, height = 10, width = 10)
 
 # Tree map, Kungs- och slottsparken, mg65 ----
 dat_temp <- dat_trees_geo %>% 
@@ -288,7 +288,7 @@ mg65 <- ggplot() +
   theme(axis.text = element_blank(), axis.ticks = element_blank(), axis.title = element_blank())
 mg65
 
-ggsave("Output/Natur/Tree-map-most-common-trees-on-map-Slottsparken.png", mg65, height = 10, width = 10)
+ggsave("Output/Natur/065-Tree-map-most-common-trees-on-map-Slottsparken.png", mg65, height = 10, width = 10)
 
 # Bar chart, Pildammsparken, mg66 ----
 dat_temp <- dat_trees_geo %>% 
@@ -328,7 +328,7 @@ mg66 <- dat_temp %>%
   theme(text = element_text(size = 10), plot.title.position = "plot", axis.ticks = element_blank())
 mg66
 
-ggsave("Output/Natur/Tree-map-most-common-trees-Pildammssparken.png", mg66, height = 10, width = 10)
+ggsave("Output/Natur/066-Tree-map-most-common-trees-Pildammssparken.png", mg66, height = 10, width = 10)
 
 # Tree map, Pildammsparken, mg67 ----
 dat_temp <- dat_trees_geo %>% 
@@ -356,7 +356,7 @@ mg67 <- ggplot() +
         text = element_text(size = 12))
 mg67
 
-ggsave("Output/Natur/Tree-map-most-common-trees-on-map-Pildammsparken.png", mg67, height = 10, width = 10)
+ggsave("Output/Natur/067-Tree-map-most-common-trees-on-map-Pildammsparken.png", mg67, height = 10, width = 10)
 
 # Tree map, Pildammsparken, mg68 ----
 dat_temp <- dat_trees_geo %>% 
@@ -388,4 +388,4 @@ mg68 <- ggplot(dat_temp, aes(X, Y)) +
         strip.background = element_blank())
 mg68
 
-ggsave("Output/Natur/Tree-map-Pildammsparken-by-year.png", mg68, height = 12, width = 15)
+ggsave("Output/Natur/068-Tree-map-Pildammsparken-by-year.png", mg68, height = 12, width = 15)

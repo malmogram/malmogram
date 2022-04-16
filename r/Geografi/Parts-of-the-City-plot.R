@@ -25,7 +25,7 @@ mg15 <- ggplot() +
   theme(plot.caption.position = "plot")
 mg15
 
-ggsave("Output/Geografi/Malmo-main-areas.png", mg15, width = 10, height = 10)
+ggsave("Output/Geografi/015-Malmo-main-areas.png", mg15, width = 10, height = 10)
 
 ggmap(get_stamenmap(as.vector(m_bbox), maptype = "terrain-background", zoom = 12)) +
   geom_sf(data = dat_roads, inherit.aes = F, alpha = 0.4) +
@@ -44,7 +44,7 @@ mg16 <- ggplot() +
   theme(plot.caption.position = "plot")
 mg16
 
-ggsave("Output/Geografi/Malmo-subareas.png", mg16, width = 15, height = 13)
+ggsave("Output/Geografi/016-Malmo-subareas.png", mg16, width = 15, height = 13)
 
 # City part shape, mg 18 ----
 dat_temp <- dat_adm_mpol %>% 
@@ -83,7 +83,7 @@ mg18 <- dat_temp %>%
         plot.caption.position = "plot")
 mg18
 
-ggsave("Output/Geografi/Malmo-subareas-as-shapes.png", mg18, width = 25, height = 15)
+ggsave("Output/Geografi/018-Malmo-subareas-as-shapes.png", mg18, width = 25, height = 15)
 
 # DeSO, mg19 ----
 mg19 <- ggplot() +
@@ -96,7 +96,7 @@ mg19 <- ggplot() +
   theme(plot.caption.position = "plot", axis.title = element_blank())
 mg19
 
-ggsave("Output/Geografi/Malmo-subareas-DeSO.png", mg19, width = 15, height = 13)
+ggsave("Output/Geografi/019-Malmo-subareas-DeSO.png", mg19, width = 15, height = 13)
 
 # Area size, mg 20 ----
 dat_temp <- dat_adm_mpol %>% 
@@ -123,7 +123,7 @@ mg20 <- dat_temp %>%
         axis.text.y = element_text(vjust = 0.3))
 mg20
 
-ggsave("Output/Geografi/Malmo-subareas-area-size.png", mg20, width = 7, height = 16)
+ggsave("Output/Geografi/020-Malmo-subareas-area-size.png", mg20, width = 7, height = 16)
 
 # Malmö in the world, mg21 ----
 dat_temp <- dat_adm_mpol %>% 
@@ -151,4 +151,4 @@ mg21 <- world %>%
         plot.caption.position = "plot")
 mg21
 
-ggsave("Output/Geografi/Malmo-as-the-world.png", mg21, width = 20, height = 10)
+ggsave("Output/Geografi/021-Malmo-as-the-world.png", mg21, width = 20, height = 10)

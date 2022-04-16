@@ -33,7 +33,7 @@ mg41 <- dat %>%
         axis.title = element_blank())
 mg41
 
-ggsave("Output/Politik/Riksdag-circles-by-year.png", mg41, height = 4, width = 10)
+ggsave("Output/Politik/041-Riksdag-circles-by-year.png", mg41, height = 4, width = 10)
 
 # Malmö, time series, mg42 ----
 dat_temp <- dat %>% 
@@ -62,7 +62,7 @@ mg42 <- dat_temp %>%
         panel.grid.major = element_line(color = "#550000"))
 mg42
 
-ggsave("Output/Politik/Riksdag-by-year-per-party.png", mg42, height = 8, width = 10)
+ggsave("Output/Politik/042-Riksdag-by-year-per-party.png", mg42, height = 8, width = 10)
 
 # Path-graph, Malmö and Sweden, mg43 ----
 dat_temp <- dat %>% 
@@ -93,7 +93,7 @@ mg43 <- dat_temp %>%
         panel.grid.minor = element_blank())
 mg43
 
-ggsave("Output/Politik/Riksdag-paths-per-party.png", mg43, height = 8, width = 10)
+ggsave("Output/Politik/043-Riksdag-paths-per-party.png", mg43, height = 8, width = 10)
 
 # Point-line-comparison plot 2018, mg44 ----
 dat_temp <- dat %>% 
@@ -124,7 +124,7 @@ mg44 <- ggplot(dat_temp, aes(p, fct_reorder(Parti, p_Malmö, mean))) +
         panel.grid.major.y = element_blank())
 mg44
 
-ggsave("Output/Politik/Riksdag-Sweden-to-Malmoe-comparison-2018.png", mg44, height = 6, width = 8)
+ggsave("Output/Politik/044-Riksdag-Sweden-to-Malmoe-comparison-2018.png", mg44, height = 6, width = 8)
 
 # Point-line-comparison centered on proportion for Sweden, mg45 ----
 dat_temp <- dat %>% 
@@ -141,14 +141,21 @@ dat_temp <- dat %>%
   ungroup() %>% 
   mutate(Parti = fct_reorder(Parti, Differens, mean))
 
-mg45 <- ggplot(dat_temp, aes(Differens, Parti, col = Relativt_störst)) +
-  geom_point() +
-  geom_segment(aes(yend = Parti, xend = 0)) +
-  xlim(-0.075,0.075) +
+mg45 <- ggplot(dat_temp, aes(Differens, Parti)) +
+  geom_point(size = 3, col = "white") +
+  geom_segment(aes(yend = Parti, xend = 0), size = 1, col = "white") +
+  scale_x_continuous(breaks = seq(-0.1, 0.1, 0.02), limits = c(-0.06, 0.06), labels = seq(-10, 10, 2)) +
+  labs(title = "Malmö minus Sverige. Utfall i riksdagsval 2018", 
+       x = "Procentenheter skillnad, Malmö - Sverige", y = "Parti",
+       caption = "Källa: SCBs valstatistik, http://www.scb.se/me0104 
+       Malmögram 45
+       28 februari 2022") +
   theme_mg5() +
-  theme(panel.grid = element_line(color = "grey20"), 
-        legend.position = "none")
+  theme(panel.grid = element_line(color = "#550000"),
+        panel.grid.major.y = element_blank(), legend.position = "none")
 mg45
+
+ggsave("Output/Politik/045-Riksdag-Sweden-to-Malmoe-comparison-2018-centered.png", mg45, height = 6, width = 8)
 
 # Point-line-comparison centered on proportion for Sweden, relative comparison (log-scale) mg46 ----
 dat_temp <- dat %>% 
@@ -203,7 +210,7 @@ mg47 <- dat %>%
   theme(panel.grid = element_blank(), axis.ticks = element_line(color = "white"))
 mg47
 
-ggsave("Output/Politik/Riksdag-Malmoe-bar-by-year.png", mg47, height = 6, width = 8)
+ggsave("Output/Politik/047-Riksdag-Malmoe-bar-by-year.png", mg47, height = 6, width = 8)
 
 # Malmö, stacked bars over time, excluding non-voters, mg47b ----
 valår <- c(unique(dat$År), 2022)
@@ -235,7 +242,7 @@ mg47b <- dat %>%
   theme(panel.grid = element_blank(), axis.ticks = element_line(color = "white"))
 mg47b
 
-ggsave("Output/Politik/Riksdag-Malmoe-bar-by-year-only-parties.png", mg47b, height = 6, width = 8)
+ggsave("Output/Politik/047b-Riksdag-Malmoe-bar-by-year-only-parties.png", mg47b, height = 6, width = 8)
 
 # Malmö, piecharts over time, animated, mg48 ----
 mg48 <- dat %>% 
@@ -256,22 +263,31 @@ mg48 <- dat %>%
   labs(title = "Malmö i riksdagsvalet {closest_state}")
 
 animate(mg48, nframes = 400, width = 500, height = 400, fps = 40)
-anim_save("Output/Politik/Riksdag-Malmoe-pie-over-time.gif")
+anim_save("Output/Politik/048-Riksdag-Malmoe-pie-over-time.gif")
 
 # Malmö and neighbours, mg49 ----
 mg49 <- dat %>% 
-  filter(Region %in% c("Malmö", "Vellinge", "Lomma", "Burlöv", "Staffanstorp", "Svedala"),
+  filter(Region %in% c("Malmö", "Vellinge", "Lomma", "Burlöv", "Staffanstorp", "Svedala", "Lund"),
          År == 2018) %>%
   group_by(År, Region) %>% 
   mutate(p = Antal / sum(Antal)) %>% 
   ungroup() %>% arrange(Region) %>% 
   mutate(Region = fct_reorder(Region, p * (Parti == "Socialdemokraterna"), sum, .desc = T)) %>% 
   ggplot(aes(Region, p, col = Parti, group = Parti)) +
-  geom_point(size = 3) +
-  geom_line() +
+  geom_point(size = 4) +
+  geom_line(size = 1) +
+  scale_color_manual(values = dat_parties$Färg) +
+  scale_y_continuous(breaks = seq(0,0.4,0.1), labels = seq(0, 40, 10), limits = c(0, 0.4)) +
+  labs(title = "Malmö och några grannar i riksdagsvalet 2018",
+       x = "", y = "Andel röster (procent)",
+       caption = "Källa: SCBs valstatistik, http://www.scb.se/me0104 
+       Malmögram 49
+       4 mars 2022") +
   theme_mg5() +
-  theme(panel.grid = element_line(color = "grey40"))
+  theme(panel.grid.minor = element_blank(), panel.grid.major.x = element_blank(), panel.border = element_blank())
 mg49
+
+ggsave("Output/Politik/049-Riksdag-Malmoe-and-neighbours.png", mg49, height = 6, width = 8)
 
 # Malmö against all other municipalities, mg50 ----
 dat_temp <- dat %>% 
@@ -286,11 +302,20 @@ mg50 <- dat_temp %>%
   ggplot(aes(p, fct_rev(Parti))) +
   geom_boxplot(col = "white", fill = NA, width = 0.2) +
   geom_point(data = . %>% filter(Region == "Malmö"), fill = "red", shape = 21, size = 3) +
-  geom_text(aes(x = 0.5, label = Text), data = . %>% filter(Region == "Malmö"), col = "white") +
+  geom_text(aes(x = 0.5, label = Text), data = . %>% filter(Region == "Malmö"), col = "white", size = 3) +
+  labs(title = "Sveriges kommuner i riksdagsvalet 2018",
+       subtitle = "Malmö som röd punkt. Text anger antalet kommuner med högre (eller lägre) andel för partiet.",
+       x = "Andel röster", y = "Parti",
+       caption = "Källa: SCBs valstatistik, http://www.scb.se/me0104 
+       Malmögram 50
+       28 februari 2022") +
+  xlim(0, 0.6) +
   theme_mg5() +
   theme(panel.grid = element_line(color = "#880000"),
         panel.grid.major.y = element_blank())
 mg50
+
+ggsave("Output/Politik/050-Riksdag-Malmoe-relation-to-other-municipalities.png", mg50, height = 6, width = 8)
 
 # Malmö multiple scatterplots, mg51 ----
 dat_temp <- dat %>% 

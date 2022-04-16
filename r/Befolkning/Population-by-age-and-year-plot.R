@@ -36,7 +36,7 @@ mg29 <- ggplot(dat_temp, aes(Ålder, Antal_temp, fill = Kön)) +
   theme_mg1()
 mg29
 
-ggsave("Output/Befolkning/Population-by-age.png", mg29, height = 10, width = 10)
+ggsave("Output/Befolkning/029-Population-by-age.png", mg29, height = 10, width = 10)
 
 # Population by age and sex, mg30 ----
 dat_temp <- dat %>% 
@@ -75,7 +75,7 @@ mg30 <- g1 / g2 &
        Malmögram 30, 3 februari 2022")
 mg30
 
-ggsave("Output/Befolkning/Population-by-age.png", mg30, height = 8, width = 10)
+ggsave("Output/Befolkning/030-Population-by-age.png", mg30, height = 8, width = 10)
 
 # Gender ratio (women to men) by age, mg31 ----
 dat_temp <- dat %>% 
@@ -99,7 +99,7 @@ mg31 <- dat_temp %>%
   coord_cartesian(ylim = c(0, 2.2))
 mg31
 
-ggsave("Output/Befolkning/Population-gender-ratio-by-age.png", mg31, height = 5, width = 10)
+ggsave("Output/Befolkning/031-Population-gender-ratio-by-age.png", mg31, height = 5, width = 10)
 
 mod <- lm(log(Kvot) ~ Ålder, dat_temp %>% filter(Ålder > 74))
 dat_pred <- tibble(Ålder = 75:150)
@@ -131,7 +131,7 @@ mg32 <- dat_temp %>%
   theme_mg1()
 mg32
 
-ggsave("Output/Befolkning/Population-by-age-and-year-classes.png", mg32, height = 5, width = 10)
+ggsave("Output/Befolkning/032-Population-by-age-and-year-classes.png", mg32, height = 5, width = 10)
 
 # Lines per age-group, population count, mg33 ----
 dat_temp <- dat %>% 
@@ -157,7 +157,7 @@ mg33 <- dat_temp %>%
   theme_mg1()
 mg33
 
-ggsave("Output/Befolkning/Population-by-age-and-year.png", mg33, height = 8, width = 10)
+ggsave("Output/Befolkning/033-Population-by-age-and-year.png", mg33, height = 8, width = 10)
 
 # Lines per age-group, population proportion, mg34 ----
 dat_temp <- dat %>% 
@@ -184,7 +184,7 @@ mg34 <- dat_temp %>%
   theme_mg1()
 mg34
 
-ggsave("Output/Befolkning/Population-by-age-and-year-proportions.png", mg34, height = 8, width = 10)
+ggsave("Output/Befolkning/034-Population-by-age-and-year-proportions.png", mg34, height = 8, width = 10)
 
 # Gender-ratio as path diagram, mg35 ----
 dat_temp <- dat %>% 
@@ -206,7 +206,7 @@ mg35 <- dat_temp %>%
   theme_mg1()
 mg35
 
-ggsave("Output/Befolkning/Population-gender-ratio-as-path.png", mg35, height = 8, width = 10)
+ggsave("Output/Befolkning/035-Population-gender-ratio-as-path.png", mg35, height = 8, width = 10)
 
 # Marriage status over time, mg36 ----
 mg36 <- dat %>% 
@@ -223,7 +223,7 @@ mg36 <- dat %>%
   theme_mg1()
 mg36
 
-ggsave("Output/Befolkning/Population-marriage-status-over-time.png", mg36, height = 8, width = 10)
+ggsave("Output/Befolkning/036-Population-marriage-status-over-time.png", mg36, height = 8, width = 10)
 
 # Marriage status at 30, mg37 ----
 mg37 <- dat %>% 
@@ -246,7 +246,7 @@ mg37 <- dat %>%
         panel.grid.major.x = element_blank(), panel.grid.major.y = element_blank())
 mg37
 
-ggsave("Output/Befolkning/Population-marriage-status-as-pies.png", mg37, height = 4, width = 10)
+ggsave("Output/Befolkning/037-Population-marriage-status-as-pies.png", mg37, height = 4, width = 10)
 
 
 # This could make an interesting animation
@@ -274,7 +274,7 @@ mg39 <- ggplot(dat_temp, aes(Ålder, Antal_temp, fill = Kön)) +
   theme(panel.grid.minor.x = element_line(color = "#333399"))
 mg39
 
-ggsave("Output/Befolkning/Population-pyramids-over-time.png", mg39, height = 8, width = 10)
+ggsave("Output/Befolkning/039-Population-pyramids-over-time.png", mg39, height = 8, width = 10)
 
 # Population pyramid, animation, mg40----
 dat_temp <- dat %>% 
@@ -296,7 +296,7 @@ g1 <- ggplot(dat_temp, aes(Ålder, Antal_temp, fill = Kön)) +
   theme(legend.title = element_blank())
 
 animate(g1, nframes = 150, rewind = F, end_pause = 10, width = 800, height = 800, res = 100)
-anim_save("Output/Befolkning/Population-pyramid-over-time.gif")
+anim_save("Output/Befolkning/040-Population-pyramid-over-time.gif")
 
 # Population pyramid but filled by marriage status, mg54 ----
 mg54 <- dat %>% 
@@ -307,10 +307,17 @@ mg54 <- dat %>%
   geom_bar(stat = "identity", position = position_fill(), width = 1) +
   # geom_hline(yintercept = seq(-0.75,0.75,0.25), col = "grey80") +
   geom_vline(xintercept = seq(25,75,25)) +
-  geom_hline(yintercept = 0) +
+  # geom_hline(yintercept = seq(-0.75, 0.75, 0.25)) +
   coord_flip() +
   facet_wrap(~ Kön, scales = "free_x") +
-  scale_y_continuous(expand = c(0,0)) +
+  labs(title = "Malmö stad, befolkningens civilstånd efter ålder, 2020",
+       y = "Andel (hundradelar)", x = "Ålder",
+       caption = "Källa: SCB, http://www.scb.se/be0101
+       Malmögram 54, 10 mars 2022") +
+  scale_y_continuous(expand = c(0,0), breaks = c(-0.75,-0.5,-0.25,0.25,0.5,0.75), labels = c(75, 50, 25, 25, 50, 75)) +
   scale_x_continuous(expand = c(0,0)) +
+  scale_fill_brewer(palette = "Blues") +
   theme_mg1()
 mg54
+
+ggsave("Output/Befolkning/054-Marriage-status-by-age.png", mg54, height = 8, width = 10)

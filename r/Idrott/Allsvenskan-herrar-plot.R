@@ -44,7 +44,7 @@ g_mg8 <- dat_temp %>%
   theme(legend.position = "none")
 g_mg8
 
-ggsave("Output/Idrott/MFF-men-win-proportion.png", g_mg8, height = 6, width = 10)
+ggsave("Output/Idrott/008-MFF-men-win-proportion.png", g_mg8, height = 6, width = 10)
 
 # All MFF games played in Allsvenskan, mg9 ----
 mg9 <- dat_long %>% 
@@ -67,7 +67,7 @@ mg9 <- dat_long %>%
         legend.position = "bottom", legend.title = element_blank())
 mg9
 
-ggsave("Output/Idrott/MFF-men-allsvenskan-games.png", mg9, height = 10, width = 6)
+ggsave("Output/Idrott/009-MFF-men-allsvenskan-games.png", mg9, height = 10, width = 6)
 
 # MFF games in Allsvenskan 2008-2021, mg10 ----
 dat_long %>% 
@@ -107,7 +107,7 @@ mg10 <- dat_long %>%
         axis.title.y = element_blank(),
         legend.position = "bottom", legend.title = element_blank())
 mg10
-ggsave("Output/Idrott/MFF-men-allsvenskan-games-2008-2021.png", mg10, height = 6, width = 10)
+ggsave("Output/Idrott/010-MFF-men-allsvenskan-games-2008-2021.png", mg10, height = 6, width = 10)
 
 # Cumulative results. Wins +1, ties 0, losses -1, mg11 ----
 dat_temp <- dat_long %>% 
@@ -138,7 +138,7 @@ mg11 <- ggplot(dat_temp, aes(Matchnr, Kumulativ_summa, color = Plats)) +
   theme_mg2_mff()
 mg11
 
-ggsave("Output/Idrott/MFF-men-allsvenskan-cumulative-result.png", mg11, height = 6, width = 10)
+ggsave("Output/Idrott/011-MFF-men-allsvenskan-cumulative-result.png", mg11, height = 6, width = 10)
 
 # Scored and conceded goals. Mean per season, mg12 ----
 dat_temp <- dat_long %>% 
@@ -172,7 +172,7 @@ mg12 <- dat_temp %>%
   coord_cartesian(ylim = c(-4,4))
 mg12
 
-ggsave("Output/Idrott/MFF-men-allsvenskan-scored-and-conceded-over-time.png", mg12, height = 6, width = 10)
+ggsave("Output/Idrott/012-MFF-men-allsvenskan-scored-and-conceded-over-time.png", mg12, height = 6, width = 10)
 
 # Scored and conceded goals scattergram, mg13 ----
 dat_temp <- dat_long %>% 
@@ -217,7 +217,7 @@ mg13 <- ggplot(dat_temp, aes(`Gjorda mål, medel`, `Insläppta mål, medel`)) +
   theme(legend.position = "none")
 mg13
 
-ggsave("Output/Idrott/MFF-men-allsvenskan-scored-conceded-scattergram.png", mg13, height = 8, width = 12)
+ggsave("Output/Idrott/013-MFF-men-allsvenskan-scored-conceded-scattergram.png", mg13, height = 8, width = 12)
 
 # Results against specific opponents, mg14 ----
 dat_temp <- dat_long %>% 
@@ -307,4 +307,4 @@ mg14 <- ggplot(dat_temp, aes(ifelse(Plats == "Hemma", -Matchnr, Matchnr),
         strip.text.y.left = element_text(angle = 0))
 mg14
 
-ggsave("Output/Idrott/MFF-men-allsvenskan-cumulative-result-by-opponent.png", mg14, height = 14, width = 10)
+ggsave("Output/Idrott/014-MFF-men-allsvenskan-cumulative-result-by-opponent.png", mg14, height = 14, width = 10)

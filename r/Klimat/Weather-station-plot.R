@@ -58,7 +58,7 @@ mg22 <- g1 + g2 + guide_area() +
         text = element_text(family = "Garamond"))
 mg22
 
-ggsave("Output/Klimat/Average-air-temp.png", mg22, height = 6, width = 10)
+ggsave("Output/Klimat/022-Average-air-temp.png", mg22, height = 6, width = 10)
 
 # g1 + 
 #   inset_element(g2, left = 0.7, bottom = -0.5, right = 1, top = 1) & 
@@ -94,7 +94,7 @@ mg23 <- g1 + g2 + guide_area() +
         text = element_text(family = "Garamond"))
 mg23
 
-ggsave("Output/Klimat/Max-and-min-air-temp.png", mg23, height = 6, width = 10)
+ggsave("Output/Klimat/023-Max-and-min-air-temp.png", mg23, height = 6, width = 10)
 
 # Temperature by day 1960s and 2010s, mg24 ----
 dat_temp <- dat_weatherstation %>% 
@@ -124,7 +124,7 @@ mg24 <- dat_temp %>%
        caption = "Källa: SMHI meteorologiska observationer\nhttps://www.smhi.se/data/meteorologi/ladda-ner-meteorologiska-observationer\n\nMalmögram 24\n11 januari 2022")
 mg24
 
-ggsave("Output/Klimat/Decade-average-per-day-air-temp.png", mg24, height = 6, width = 10)
+ggsave("Output/Klimat/024-Decade-average-per-day-air-temp.png", mg24, height = 6, width = 10)
 
 # Temperature difference per date, 1960s and 2010, mg25 ----
 dat_temp <- dat_temp %>% 
@@ -154,7 +154,7 @@ mg25 <- dat_temp %>%
        caption = "Källa: SMHI meteorologiska observationer\nhttps://www.smhi.se/data/meteorologi/ladda-ner-meteorologiska-observationer\n\nMalmögram 25\n11 januari 2022")
 mg25
 
-ggsave("Output/Klimat/Decade-average-difference-per-day-air-temp.png", mg25, height = 6, width = 10)
+ggsave("Output/Klimat/025-Decade-average-difference-per-day-air-temp.png", mg25, height = 6, width = 10)
 
 # Temperature during the day and year, mean 2010s, mg26 ----
 mg26 <- dat_weatherstation %>% 
@@ -179,7 +179,7 @@ mg26 <- dat_weatherstation %>%
        caption = "Källa: SMHI meteorologiska observationer\nhttps://www.smhi.se/data/meteorologi/ladda-ner-meteorologiska-observationer\n\nMalmögram 26\n11 januari 2022")
 mg26
 
-ggsave("Output/Klimat/Average-by-day-and-hour-air-temp.png", mg26, height = 10, width = 11)
+ggsave("Output/Klimat/026-Average-by-day-and-hour-air-temp.png", mg26, height = 10, width = 11)
 
 # Temperatur per hour and month, mg27 ----
 mg27 <- dat_weatherstation %>% 
@@ -214,7 +214,7 @@ mg27 <- dat_weatherstation %>%
         axis.title.x = element_blank())
 mg27
 
-ggsave("Output/Klimat/Average-by-hour-and-month-air-temp.png", mg27, height = 7, width = 11)
+ggsave("Output/Klimat/027-Average-by-hour-and-month-air-temp.png", mg27, height = 7, width = 11)
 
 # Temperatur per day and year, mg28 ----
 dat_temp <- dat_weatherstation %>% 
@@ -253,7 +253,7 @@ mg28 <- dat_temp %>%
         strip.background.y = element_blank(), axis.text = element_text(size = 5))
 mg28
 
-ggsave("Output/Klimat/Daily-air-temp.png", mg28, height = 7, width = 11)
+ggsave("Output/Klimat/028-Daily-air-temp.png", mg28, height = 7, width = 11)
 
 # Temperature by month, ridge plots, mg38 ----
 mg38 <- dat_weatherstation %>% 
@@ -281,4 +281,4 @@ mg38 <- dat_weatherstation %>%
        Malmögram 38, 11 januari 2022")
 mg38
 
-ggsave("Output/Klimat/Density-by-month-air-temp.png", mg38, height = 12, width = 11)
+ggsave("Output/Klimat/038-Density-by-month-air-temp.png", mg38, height = 12, width = 11)
