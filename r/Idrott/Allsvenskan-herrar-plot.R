@@ -44,7 +44,7 @@ g_mg8 <- dat_temp %>%
   theme(legend.position = "none")
 g_mg8
 
-ggsave("Output/Idrott/008-MFF-men-win-proportion.png", g_mg8, height = 6, width = 10)
+# ggsave("Output/Idrott/008-MFF-men-win-proportion.png", g_mg8, height = 6, width = 10)
 
 # All MFF games played in Allsvenskan, mg9 ----
 mg9 <- dat_long %>% 
@@ -107,7 +107,7 @@ mg10 <- dat_long %>%
         axis.title.y = element_blank(),
         legend.position = "bottom", legend.title = element_blank())
 mg10
-ggsave("Output/Idrott/010-MFF-men-allsvenskan-games-2008-2021.png", mg10, height = 6, width = 10)
+# ggsave("Output/Idrott/010-MFF-men-allsvenskan-games-2008-2021.png", mg10, height = 6, width = 10)
 
 # Cumulative results. Wins +1, ties 0, losses -1, mg11 ----
 dat_temp <- dat_long %>% 
@@ -138,7 +138,7 @@ mg11 <- ggplot(dat_temp, aes(Matchnr, Kumulativ_summa, color = Plats)) +
   theme_mg2_mff()
 mg11
 
-ggsave("Output/Idrott/011-MFF-men-allsvenskan-cumulative-result.png", mg11, height = 6, width = 10)
+# ggsave("Output/Idrott/011-MFF-men-allsvenskan-cumulative-result.png", mg11, height = 6, width = 10)
 
 # Scored and conceded goals. Mean per season, mg12 ----
 dat_temp <- dat_long %>% 
@@ -172,7 +172,7 @@ mg12 <- dat_temp %>%
   coord_cartesian(ylim = c(-4,4))
 mg12
 
-ggsave("Output/Idrott/012-MFF-men-allsvenskan-scored-and-conceded-over-time.png", mg12, height = 6, width = 10)
+# ggsave("Output/Idrott/012-MFF-men-allsvenskan-scored-and-conceded-over-time.png", mg12, height = 6, width = 10)
 
 # Scored and conceded goals scattergram, mg13 ----
 dat_temp <- dat_long %>% 
@@ -217,7 +217,7 @@ mg13 <- ggplot(dat_temp, aes(`Gjorda mål, medel`, `Insläppta mål, medel`)) +
   theme(legend.position = "none")
 mg13
 
-ggsave("Output/Idrott/013-MFF-men-allsvenskan-scored-conceded-scattergram.png", mg13, height = 8, width = 12)
+# ggsave("Output/Idrott/013-MFF-men-allsvenskan-scored-conceded-scattergram.png", mg13, height = 8, width = 12)
 
 # Results against specific opponents, mg14 ----
 dat_temp <- dat_long %>% 
@@ -307,4 +307,60 @@ mg14 <- ggplot(dat_temp, aes(ifelse(Plats == "Hemma", -Matchnr, Matchnr),
         strip.text.y.left = element_text(angle = 0))
 mg14
 
-ggsave("Output/Idrott/014-MFF-men-allsvenskan-cumulative-result-by-opponent.png", mg14, height = 14, width = 10)
+# ggsave("Output/Idrott/014-MFF-men-allsvenskan-cumulative-result-by-opponent.png", mg14, height = 14, width = 10)
+
+# Results against specific opponents at home, filled bar, mg101 ----
+mg101 <- dat_long %>% 
+  filter(Fokuslag == "Malmö FF", Säsong >= 2008, Plats == "Hemma") %>% 
+  count(Motståndare, Utfall) %>% 
+  group_by(Motståndare) %>% 
+  mutate(`Antal matcher` = sum(n),
+         Andel = 100 * n / `Antal matcher`,
+         `Andel segrar` = sum(Andel * (Utfall == "Seger")),
+         `Andel förlust` = sum(Andel * (Utfall == "Förlust")),
+         Utfall = ifelse(Utfall == "Seger", "Malmöseger", ifelse(Utfall == "Oavgjort", Utfall, "Malmöförlust")),
+         Utfall = ordered(Utfall, c("Malmöförlust", "Oavgjort", "Malmöseger"))) %>% 
+  filter(`Antal matcher` > 5) %>% 
+  ggplot(aes(Andel, fct_reorder(Motståndare, `Andel segrar`), fill = Utfall)) +
+  geom_col(color = "white", width = 0.45) +
+  geom_text(aes(label = n), position = position_stack(vjust = 0.5)) +
+  scale_fill_manual(values = c("#ffa6a6", "white", "#0091D2")) +
+  scale_x_continuous(breaks = seq(20, 80, 20), expand = c(0, 0)) +
+  labs(title = "Malmö FF i herrallsvenskan",
+       subtitle = "Resultat på hemmaplan, 2008 - 2021. Motståndare med minst fem malmöbesök.",
+       x = "Andel i procent", y = "Besökare",
+       caption = "Källa: Svenska fotbollförbundet SvFF
+       
+       Malmögram 101
+       17 april 2022") +
+  theme_mg2_mff() +
+  theme(legend.position = "top", text = element_text(size = 15),
+        panel.grid.major.y = element_blank(), legend.title = element_blank())
+mg101
+
+ggsave("Output/Idrott/101-MFF-men-allsvenskan-result-at-home-by-opponent.png", mg101, height = 12, width = 10)
+
+dat_long %>% 
+  filter(Fokuslag == "Malmö FF", Säsong >= 2008, Plats == "Hemma") %>% 
+  count(Motståndare, Utfall) %>% 
+  group_by(Motståndare) %>% 
+  mutate(`Antal matcher` = sum(n),
+         Andel = 100 * n / `Antal matcher`,
+         `Andel segrar` = sum(Andel * (Utfall == "Seger")),
+         Poäng = ifelse(Utfall == "Seger", 3, ifelse(Utfall == "Oavgjort", 1, 0)),
+         Utfall = ifelse(Utfall == "Seger", "Malmöseger", ifelse(Utfall == "Oavgjort", Utfall, "Malmöförlust"))) %>% 
+  summarise(Poäng = sum(Poäng * n), Antal = mean(`Antal matcher`)) %>% 
+  mutate(Poängsnitt = Poäng / Antal) %>% 
+  arrange(-Poängsnitt) %>% print(n = 200)
+
+dat_long %>% 
+  filter(Säsong >= 2008, Plats == "Borta") %>% 
+  count(Fokuslag, Motståndare, Utfall) %>%
+  complete(Fokuslag, Motståndare, Utfall, fill = list(n = 0)) %>% 
+  group_by(Fokuslag, Motståndare) %>% 
+  mutate(`Antal matcher` = sum(n)) %>% 
+  filter(`Antal matcher` > 9) %>% 
+  ungroup() %>% 
+  mutate(Andel = n / `Antal matcher`) %>% 
+  arrange(Andel) %>% 
+  filter(Utfall == "Seger")

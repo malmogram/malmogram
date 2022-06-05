@@ -13,6 +13,18 @@ dat <- read_csv("Data/Idrott/Allsvenskan, herrar, 1924-2021.csv") %>%
   mutate(Säsong = gsub("_19", "-", Säsong),
          id = 1:n())
 
+# Fix names
+dat_renames <- tibble(Gammalt = c("IFK Norrköping FK", "IF Elfsborg", "Mjällby AIF", "IK Sirius FK", "Häcken"), 
+                      Nytt = c("IFK Norrköping", "Elfsborg", "Mjällby", "Sirius", "BK Häcken"))
+foo <- function(x){
+  if(x %in% dat_renames$Gammalt) return(dat_renames$Nytt[which(x == dat_renames$Gammalt)]) else
+    return(x)
+}
+
+dat <- dat %>% 
+  mutate(Hemmalap = map_chr(Hemmalag, foo),
+         Bortalag = map_chr(Bortalag, foo))
+
 # Double row match data
 dat_long <- dat %>% 
   rename(Fokuslag = Hemmalag, Motståndare = Bortalag, 
