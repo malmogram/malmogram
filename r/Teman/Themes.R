@@ -126,3 +126,25 @@ theme_trees <- function() {
         plot.caption.position = "plot"
   )
 }
+
+# Theme 7. Transport (the bridge) ----
+theme_bridge <- function() {
+  bg_col <- "grey70"
+  text_col <- "black"
+  
+  theme(text = element_text(family = "Constantia", color = text_col, size = 12),
+        panel.background = element_rect(fill = bg_col[1], color = "black"),
+        plot.background = element_rect(fill = bg_col[1], color = bg_col[1]),
+        axis.text = element_text(color = text_col),
+        plot.title = element_text(color = text_col),
+        legend.background = element_rect(fill = NA),
+        legend.key = element_rect(fill = bg_col[1], color = bg_col[1]),
+        legend.title = element_blank(),
+        panel.grid = element_line(color = "black", linetype = "dotted"),
+        panel.grid.minor = element_blank(),
+        strip.background = element_rect(fill = bg_col, color = NA),
+        strip.text = element_text(color = text_col),
+        plot.caption.position = "plot", 
+        plot.caption = element_text(size = 6)
+  )
+}
